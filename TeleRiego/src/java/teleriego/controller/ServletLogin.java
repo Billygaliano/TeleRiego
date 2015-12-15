@@ -47,8 +47,13 @@ public class ServletLogin extends HttpServlet {
             throws ServletException, IOException {       
        
         HttpSession session = request.getSession();
-        if(session.getAttribute("membership")!=null)
+        if(session.getAttribute("membership")!=null){
             request.getRequestDispatcher("UserView.jsp").forward(request, response);
+        }
+         if(session.isNew() || session.getServletContext().setInitParameter("access", "true")){
+            response.sendRedirect("Login.jsp");
+            return;
+        }
         
         int memberUserInteger = Integer.parseInt(request.getParameter("user"));
         BigDecimal memberNumber = new BigDecimal(memberUserInteger);

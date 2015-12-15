@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -31,6 +32,15 @@ public class ServletLogOut extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+         if(session.getAttribute("membership")!=null){
+             session.invalidate();
+             response.sendRedirect("Login.jsp");
+        }else{
+             response.sendError(20, "No es posible");
+         }
+         
+         
         
     }
 
