@@ -6,7 +6,6 @@
 package teleriego.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,6 +32,7 @@ public class ServletLogin extends HttpServlet {
     private EntityManager em;
     @Resource
     private javax.transaction.UserTransaction utx;
+    private LoginViewBean loginViewBean;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,29 +44,34 @@ public class ServletLogin extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {        
-        int n = Integer.parseInt(request.getParameter("user"));
-        BigDecimal user = new BigDecimal(n);
+            throws ServletException, IOException {       
+       
+        HttpSession session = request.getSession();
+        if(session.getAttribute("membership")!=null)
+            request.getRequestDispatcher("UserView.jsp").forward(request, response);
         
+        int memberUserInteger = Integer.parseInt(request.getParameter("user"));
+        BigDecimal memberNumber = new BigDecimal(memberUserInteger);
         String password = request.getParameter("password");
-        Membership membership = em.find(Membership.class, user);
-        
-        if(membership!=null){
-            HttpSession session = request.getSession();
-            String passwordDB = membership.getPassword();
-            LoginViewBean loginViewBean = new LoginViewBean();
-            
-            if(loginViewBean.autentication(passwordDB, password)){
-                session.setAttribute("membership", membership);
-                request.getRequestDispatcher("UserView.jsp").forward(request, response);
-            }
-            else{
-                request.getRequestDispatcher("Login.jsp?errorPassword=true").forward(request, response);
-            }
-        }
-        else{
+                           
+        Membership membership = em.find(Membership.class, memberNumber);
+
+        if(membership==null){
             request.getRequestDispatcher("Login.jsp?errorPassword=true").forward(request, response);
+            return;
         }
+        
+        String passwordDB = membership.getPassword();       
+
+        if(!loginViewBean.autentication(passwordDB, password)){
+            request.getRequestDispatcher("Login.jsp?errorPassword=true").forward(request, response);
+            return;
+        }
+        
+        session.setAttribute("membership", membership);
+        
+        request.getRequestDispatcher("UserView.jsp").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -117,6 +122,12 @@ public class ServletLogin extends HttpServlet {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", e);
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void init() throws ServletException {
+        super.init(); //To change body of generated methods, choose Tools | Templates.
+        loginViewBean = new LoginViewBean();
     }
 
 }

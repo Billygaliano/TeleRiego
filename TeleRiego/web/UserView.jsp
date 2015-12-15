@@ -47,7 +47,7 @@
                             <li><a href="UserView.jsp?perfil=true">Mi Perfil</a></li>
                             <li><a href="UserView.jsp?terrenos=true">Mis Terrenos</a></li>
                             <li><a href="UserView.jsp?transaccion=true">Transacciones</a></li>
-                            <li><a href="#">Cerrar Sesión</a></li>
+                            <li><a href="ServletLogOut">Cerrar Sesión</a></li>
                         </ul>
                     </div><!--/.navbar-collapse -->
                 </div>
