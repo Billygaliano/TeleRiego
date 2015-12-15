@@ -163,7 +163,7 @@
             <div class="container">
                 <section id="perf" class="section appear clearfix">
                     <div class="container">  
-                        <div class="align-center"><h1>Pedidos</h1><br> </div>                       
+                        <div class="align-center"><h1>Transacciones</h1><br> </div>                       
                             <div class="accordion">
                                     <div class="accordion-section">
                                             <a class="accordion-section-title" href="#accordion-1">Pedido nº "numPedido"</a>
@@ -225,7 +225,7 @@
                      <div class="row mar-bot40 col-md-12" role="group" style="margin-top: 40px">
                         <div class="btn-group btn-group-justified" role="group" aria-label="...">
                         <div class="btn-group" role="group">
-                            <a href="UserView.jsp?perfil=true"><button type="button" class="btn btn-theme"><h1>Transacciones</h1></button></a>
+                            <a href="UserView.jsp?transaccion=true"><button type="button" class="btn btn-theme"><h1>Transacciones</h1></button></a>
                         </div>
                         </div>
                     </div>                    
