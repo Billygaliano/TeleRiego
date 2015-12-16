@@ -46,7 +46,9 @@ public class ServletLogin extends HttpServlet {
             throws ServletException, IOException {       
        
         if(request.getSession().getAttribute("membership")!=null){
+            request.setAttribute("profile", true);
             request.getRequestDispatcher("UserView.jsp").forward(request, response);
+            return;
         }
         
         if(request.getParameter("user")==null || request.getParameter("password")==null){

@@ -74,7 +74,7 @@
                                 <div id="sendmessage">
                                     Your message has been sent. Thank you!
                                 </div>
-                                <form action="ServletLogin" method="post" role="form">
+                                <form action="ServletLogin" method="post" role="form" class="ServletLogin">
                                     <div class="wow bounceIn">
                                         <div class="form-group">
                                             <label for="name">Usuario</label>

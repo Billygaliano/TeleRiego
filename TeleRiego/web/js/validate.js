@@ -176,28 +176,7 @@ jQuery(document).ready(function($) {
 				i.next('.validation').html( ( ierror ? (i.attr('data-msg') != undefined ? i.attr('data-msg') : 'wrong Input') : '' ) ).show('blind');
 			}
 		});
-		if( ferror ) return false; 
-			else var str = $(this).serialize();		
-				$.ajax({
-				type: "POST",
-				url: "contact/contact.php",
-				data: str,
-				success: function(msg){
-			$("#sendmessage").addClass("show");
-			$("#errormessage").ajaxComplete(function(event, request, settings){
-		
-			if(msg == 'OK')
-			{
-				$("#sendmessage").addClass("show");				
-			}
-			else
-			{
-				$("#sendmessage").removeClass("show");
-				result = msg;
-			}
-		
-			$(this).html(result);});}});
-				return false;
+		if( ferror ) return false;
             
         });
 });
