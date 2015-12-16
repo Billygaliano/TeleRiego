@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author inftel12
+ * @author inftel11
  */
 @Entity
 @Table(name = "MEMBERSHIP")
@@ -83,7 +83,7 @@ public class Membership implements Serializable {
     @Column(name = "PASSWORD")
     private String password;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "memberNumber")
-    private Collection<MembershipLand> membershipLandCollection;
+    private Collection<Land> landCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "memberNumber")
     private Collection<Transaction> transactionCollection;
 
@@ -169,12 +169,12 @@ public class Membership implements Serializable {
     }
 
     @XmlTransient
-    public Collection<MembershipLand> getMembershipLandCollection() {
-        return membershipLandCollection;
+    public Collection<Land> getLandCollection() {
+        return landCollection;
     }
 
-    public void setMembershipLandCollection(Collection<MembershipLand> membershipLandCollection) {
-        this.membershipLandCollection = membershipLandCollection;
+    public void setLandCollection(Collection<Land> landCollection) {
+        this.landCollection = landCollection;
     }
 
     @XmlTransient

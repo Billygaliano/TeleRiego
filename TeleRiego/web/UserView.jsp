@@ -100,29 +100,25 @@
             <!-- Vista Terrenos-->
             <div class="container">
                 <section id="perf" class="section appear clearfix">
-                  <div class="container">  
-                      <div class="align-center"><h1>Mis Terrenos</h1><br> </div>
-                      <div class="row mar-bot40 col-sm-offset-3 col-sm-6 col-sm-offset-3 table-responsive" role="group" style="margin-top: 0px">
-                          
-                          <table id="field_table" border="0" cellpadding="5" style="border-collapse: separate;border-spacing: 20px 20px">
-                              <thead>
-                                  <tr>
-                                      <th><h4>Nombre</h4></th>
-                                      <th><h4>Estado</h4></th>
-                                      <th><h4>Último riego</h4></th>
-                                      <th><h4>Humedad</h4></th>
-                                      <th>  </th>
-                                  </tr>
-                              </thead>
-                              <tbody>
-                                  <c:forEach var="land" items="${sessionScope.membership.membershipLandCollection}">
-                                      
-                                  </c:forEach>
-                              </tbody>
-                          </table>
-                        
-                      </div>
-                  </div>
+                    <div class="container">  
+                        <div class="align-center"><h1>Mis Terrenos</h1><br> </div>
+                        <div class="accordion">      
+                            <c:set var="i" value="1"></c:set>
+                            <c:forEach var="land" items="${sessionScope.membership.landCollection}">
+                                <div class="accordion-section">
+                                    <a class="accordion-section-title" href="#accordion-${i}">${land.nameland}</a>
+                                    <div id="accordion-${i}" class="accordion-section-content">
+
+                                        <p>Estado: <strong>${land.state}</strong></p>
+                                        <p>Último riego: <strong><fmt:formatDate type="date" value="${land.lastDateIrrigation}" /></strong></p>
+                                        <p>Humedad: <strong>${land.humidity} %</strong></p>
+                                        <a href="UserView.jsp?field=true"><button type="button">Ir a</button></a>
+                                    </div><!--end .accordion-section-content-->
+                                </div><!--end .accordion-section--> 
+                                <c:set var="i" value="${i+1}"></c:set>
+                            </c:forEach>
+                        </div><!--end .accordion-->
+                    </div>
                 </section>
             </div>
         </c:when>
@@ -158,7 +154,7 @@
                             <c:set var="i" value="1"></c:set>
                             <c:forEach var="transaction" items="${sessionScope.membership.transactionCollection}">
                                 <div class="accordion-section">
-                                    <a class="accordion-section-title" href="#accordion-${i}">Pedido nº "numPedido"</a>
+                                    <a class="accordion-section-title" href="#accordion-${i}">Pedido nº ${transaction.landId.nameland}</a>
                                     <div id="accordion-${i}" class="accordion-section-content">
                                         
                                         <p>Compra de agua para: <strong>${transaction.landId.nameland}</strong></p>

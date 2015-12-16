@@ -11,6 +11,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author inftel12
+ * @author inftel11
  */
 @Entity
 @Table(name = "TRANSACTION")
@@ -38,10 +40,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Transaction.findByDateOrder", query = "SELECT t FROM Transaction t WHERE t.dateOrder = :dateOrder"),
     @NamedQuery(name = "Transaction.findByStateOrder", query = "SELECT t FROM Transaction t WHERE t.stateOrder = :stateOrder")})
 public class Transaction implements Serializable {
-
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Basic(optional = false)
     @NotNull
     @Column(name = "N_ORDER")

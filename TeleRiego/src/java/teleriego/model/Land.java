@@ -15,6 +15,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -28,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author inftel12
+ * @author inftel11
  */
 @Entity
 @Table(name = "LAND")
@@ -83,11 +85,14 @@ public class Land implements Serializable {
     @Column(name = "LAST_DATE_IRRIGATION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastDateIrrigation;
-    @Size(max = 32)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 32)
     @Column(name = "NAMELAND")
     private String nameland;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "landId")
-    private Collection<MembershipLand> membershipLandCollection;
+    @JoinColumn(name = "MEMBER_NUMBER", referencedColumnName = "MEMBER_NUMBER")
+    @ManyToOne(optional = false)
+    private Membership memberNumber;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "landId")
     private Collection<Transaction> transactionCollection;
 
@@ -98,7 +103,7 @@ public class Land implements Serializable {
         this.landId = landId;
     }
 
-    public Land(BigDecimal landId, String longitude, String latitude, BigInteger humidity, BigInteger wMAvailable, String state, Date lastDateIrrigation) {
+    public Land(BigDecimal landId, String longitude, String latitude, BigInteger humidity, BigInteger wMAvailable, String state, Date lastDateIrrigation, String nameland) {
         this.landId = landId;
         this.longitude = longitude;
         this.latitude = latitude;
@@ -106,6 +111,7 @@ public class Land implements Serializable {
         this.wMAvailable = wMAvailable;
         this.state = state;
         this.lastDateIrrigation = lastDateIrrigation;
+        this.nameland = nameland;
     }
 
     public BigDecimal getLandId() {
@@ -180,13 +186,12 @@ public class Land implements Serializable {
         this.nameland = nameland;
     }
 
-    @XmlTransient
-    public Collection<MembershipLand> getMembershipLandCollection() {
-        return membershipLandCollection;
+    public Membership getMemberNumber() {
+        return memberNumber;
     }
 
-    public void setMembershipLandCollection(Collection<MembershipLand> membershipLandCollection) {
-        this.membershipLandCollection = membershipLandCollection;
+    public void setMemberNumber(Membership memberNumber) {
+        this.memberNumber = memberNumber;
     }
 
     @XmlTransient
