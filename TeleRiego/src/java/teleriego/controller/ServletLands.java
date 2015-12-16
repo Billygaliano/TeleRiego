@@ -30,12 +30,14 @@ public class ServletLands extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         if(request.getSession().getAttribute("membership")!=null){
             request.setAttribute("lands", true);
             request.getRequestDispatcher("UserView.jsp").forward(request, response);
         }else{  
             response.sendRedirect("Login.jsp");
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

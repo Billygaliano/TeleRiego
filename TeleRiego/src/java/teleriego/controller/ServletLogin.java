@@ -52,22 +52,19 @@ public class ServletLogin extends HttpServlet {
         }
         
         if(request.getParameter("user")==null || request.getParameter("password")==null){
-//        if(session.isNew() || session.getServletContext().setInitParameter("access", "true")){
-
             response.sendRedirect("Login.jsp");
             return;
         }
         
         int memberUserInteger = Integer.parseInt(request.getParameter("user"));
-        BigDecimal memberNumber = new BigDecimal(memberUserInteger);
-        String password = request.getParameter("password");
-                           
+        BigDecimal memberNumber = new BigDecimal(memberUserInteger);                           
         Membership membership = em.find(Membership.class, memberNumber);
         if(membership==null){
             request.getRequestDispatcher("Login.jsp?errorPassword=true").forward(request, response);
             return;
         }
         
+        String password = request.getParameter("password");
         String passwordDB = membership.getPassword(); 
         if(!loginViewBean.autentication(passwordDB, password)){
             request.getRequestDispatcher("Login.jsp?errorPassword=true").forward(request, response);

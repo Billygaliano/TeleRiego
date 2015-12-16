@@ -30,12 +30,14 @@ public class ServletLogOut extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         if(request.getSession().getAttribute("membership")!=null){
             request.getSession().invalidate();
             response.sendRedirect("Login.jsp");
         }else{  
             response.sendRedirect("Login.jsp");
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
