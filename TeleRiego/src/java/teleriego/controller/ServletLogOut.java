@@ -32,12 +32,12 @@ public class ServletLogOut extends HttpServlet {
             throws ServletException, IOException {
         
         if(request.getSession().getAttribute("membership")==null){
-            response.sendRedirect("Login.jsp");
+            request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
             return;
         }
         
         request.getSession().invalidate();
-        response.sendRedirect("Login.jsp");
+        request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
         
     }
 

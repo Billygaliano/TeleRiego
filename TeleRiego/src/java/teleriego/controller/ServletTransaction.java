@@ -34,14 +34,14 @@ public class ServletTransaction extends HttpServlet {
             throws ServletException, IOException {
         
         if(request.getSession().getAttribute("membership")==null){
-            response.sendRedirect("Login.jsp");
+            request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
             return;
         }
         
         
         
         request.setAttribute("transaction", true);
-        request.getRequestDispatcher("UserView.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/Pages/Transaction.jsp").forward(request, response);
         
     }
 

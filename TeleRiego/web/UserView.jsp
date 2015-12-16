@@ -31,28 +31,7 @@
     </head>
 	 
     <body>
-        <div class="header">
-            <section id="header" class="appear">
-                <div class="navbar"  role="navigation" data-0="line-height:100px; height:100px; background-color:rgba(0,0,0,1);" data-300="line-height:60px; height:60px; background-color:rgba(0,0,0,1);">
-
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="fa fa-bars color-white"></span>
-                        </button>
-                        <h1><a class="navbar-brand" href="index.html" data-0="line-height:90px;" data-300="line-height:50px;">Tele Riego
-                            </a></h1>
-                    </div>
-                    <div class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav" data-0="margin-top:20px;" data-300="margin-top:5px;">
-                            <li><a href="ServletProfile">${sessionScope.membership.userName}</a></li>
-                            <li><a href="ServletLands">Mis Terrenos</a></li>
-                            <li><a href="ServletTransaction">Transacciones</a></li>
-                            <li><a href="ServletLogOut">Cerrar Sesión</a></li>
-                        </ul>
-                    </div><!--/.navbar-collapse -->
-                </div>
-            </section>
-            </div>
+        <%@include file="/WEB-INF/header.jsp"%>
     <c:choose>
         <c:when test="${profile}">
             <!-- Vista Perfil-->
@@ -172,28 +151,7 @@
         </c:when>  
     </c:choose>
             
-            <section id="footer" class="section footer">
-                <div class="container">
-                    <div class="row animated opacity mar-bot0" data-andown="fadeIn" data-animation="animation">
-                        <div class="col-sm-12 align-center">
-                            <ul class="social-network social-circle">
-                                <li><a href="http://www.fenacore.org/escaparate/gmms/fenacore/contenidosGMMFenacore.cgi?tipo=noticiasenportada" class="icoRss" title="Rss"><i class="fa fa-rss"></i></a></li>
-                                <li><a href="https://twitter.com/FenacoreOficial" class="icoTwitter" title="Twitter"><i class="fa fa-twitter"></i></a></li>
-                            </ul>				
-                        </div>
-                    </div>
-
-                    <div class="row align-center copyright">
-                        <div class="col-sm-12"><p>Copyright &copy; 2015 - Máster INFTEL</p></div>
-                        <!-- 
-                            All links in the footer should remain intact. 
-                            Licenseing information is available at: http://bootstraptaste.com/license/
-                            You can buy this theme without footer links online at: http://bootstraptaste.com/buy/?theme=Green
-                        -->
-                    </div>
-                </div>
-
-            </section>
+            <%@include file="/WEB-INF/footer.jsp"%>
 
                 	
 

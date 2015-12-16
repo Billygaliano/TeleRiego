@@ -33,12 +33,12 @@ public class ServletProfile extends HttpServlet {
             throws ServletException, IOException {
         
         if(request.getSession().getAttribute("membership")==null){  
-            response.sendRedirect("Login.jsp");
+            request.getRequestDispatcher("Login.jsp").forward(request, response);
             return;
         }
         
         request.setAttribute("profile", true);
-        request.getRequestDispatcher("UserView.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/Pages/Profile.jsp").forward(request, response);
         
     }
 

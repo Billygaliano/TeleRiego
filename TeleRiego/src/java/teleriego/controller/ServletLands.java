@@ -32,12 +32,12 @@ public class ServletLands extends HttpServlet {
             throws ServletException, IOException {
         
         if(request.getSession().getAttribute("membership")==null){
-            response.sendRedirect("Login.jsp");
+            request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
             return;
         }
         
         request.setAttribute("lands", true);
-        request.getRequestDispatcher("UserView.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/Pages/Lands.jsp").forward(request, response);
         
     }
 

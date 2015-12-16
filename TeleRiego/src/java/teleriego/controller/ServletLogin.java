@@ -47,12 +47,12 @@ public class ServletLogin extends HttpServlet {
        
         if(request.getSession().getAttribute("membership")!=null){
             request.setAttribute("profile", true);
-            request.getRequestDispatcher("UserView.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
             return;
         }
         
         if(request.getParameter("user")==null || request.getParameter("password")==null){
-            response.sendRedirect("Login.jsp");
+            request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
             return;
         }
         
@@ -60,20 +60,20 @@ public class ServletLogin extends HttpServlet {
         BigDecimal memberNumber = new BigDecimal(memberUserInteger);                           
         Membership membership = em.find(Membership.class, memberNumber);
         if(membership==null){
-            request.getRequestDispatcher("Login.jsp?errorPassword=true").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/Pages/Login.jsp?errorPassword=true").forward(request, response);
             return;
         }
         
         String password = request.getParameter("password");
         String passwordDB = membership.getPassword(); 
         if(!loginViewBean.autentication(passwordDB, password)){
-            request.getRequestDispatcher("Login.jsp?errorPassword=true").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/Pages/Login.jsp?errorPassword=true").forward(request, response);
             return;
         }
         
         request.getSession().setAttribute("membership", membership);
         request.setAttribute("profile", true);
-        request.getRequestDispatcher("UserView.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/Pages/Profile.jsp").forward(request, response);
 
     }
 
