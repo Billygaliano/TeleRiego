@@ -33,6 +33,7 @@ public class ServletLands extends HttpServlet {
         
         if(request.getSession().getAttribute("membership")==null){
             response.sendRedirect("Login.jsp");
+            return;
         }
         
         request.setAttribute("lands", true);
