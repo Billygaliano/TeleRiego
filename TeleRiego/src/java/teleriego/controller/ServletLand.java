@@ -14,10 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author inftel11
+ * @author inftel12
  */
-@WebServlet(name = "ServletLands", urlPatterns = {"/ServletLands"})
-public class ServletLands extends HttpServlet {
+@WebServlet(name = "ServletLand", urlPatterns = {"/ServletLand"})
+public class ServletLand extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,11 +31,13 @@ public class ServletLands extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        
         if(request.getSession().getAttribute("membership")==null){
             response.sendRedirect("Login.jsp");
+            return;
         }
         
-        request.setAttribute("lands", true);
+        request.setAttribute("land", true);
         request.getRequestDispatcher("UserView.jsp").forward(request, response);
         
     }

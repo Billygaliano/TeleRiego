@@ -31,12 +31,13 @@ public class ServletLogOut extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        if(request.getSession().getAttribute("membership")!=null){
-            request.getSession().invalidate();
+        if(request.getSession().getAttribute("membership")==null){
             response.sendRedirect("Login.jsp");
-        }else{  
-            response.sendRedirect("Login.jsp");
+            return;
         }
+        
+        request.getSession().invalidate();
+        response.sendRedirect("Login.jsp");
         
     }
 

@@ -108,11 +108,10 @@
                                 <div class="accordion-section">
                                     <a class="accordion-section-title" href="#accordion-${i}">${land.nameland}</a>
                                     <div id="accordion-${i}" class="accordion-section-content">
-
                                         <p>Estado: <strong>${land.state}</strong></p>
                                         <p>Último riego: <strong><fmt:formatDate type="date" value="${land.lastDateIrrigation}" /></strong></p>
                                         <p>Humedad: <strong>${land.humidity} %</strong></p>
-                                        <a href="UserView.jsp?field=true"><button type="button">Ir a</button></a>
+                                        <a href="ServletLand">Regar</a>
                                     </div><!--end .accordion-section-content-->
                                 </div><!--end .accordion-section--> 
                                 <c:set var="i" value="${i+1}"></c:set>
@@ -122,7 +121,7 @@
                 </section>
             </div>
         </c:when>
-        <c:when test="${param.field}">
+        <c:when test="${land}">
             <!-- Vista de un terreno-->
              <div class="container">
                 <section id="perf" class="section appear clearfix">
@@ -156,7 +155,6 @@
                                 <div class="accordion-section">
                                     <a class="accordion-section-title" href="#accordion-${i}">Pedido nº ${transaction.landId.nameland}</a>
                                     <div id="accordion-${i}" class="accordion-section-content">
-                                        
                                         <p>Compra de agua para: <strong>${transaction.landId.nameland}</strong></p>
                                         <p>Cantidad de agua: <strong>${transaction.amount} m<sup>3</sup></strong></p>
                                         <p>Precio total: <strong>${transaction.price} €</strong></p>

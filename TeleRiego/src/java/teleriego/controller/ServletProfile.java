@@ -32,12 +32,12 @@ public class ServletProfile extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        if(request.getSession().getAttribute("membership")!=null){
-            request.setAttribute("profile", true);
-            request.getRequestDispatcher("UserView.jsp").forward(request, response);
-        }else{  
+        if(request.getSession().getAttribute("membership")!=null){  
             response.sendRedirect("Login.jsp");
         }
+        
+        request.setAttribute("profile", true);
+        request.getRequestDispatcher("UserView.jsp").forward(request, response);
         
     }
 
