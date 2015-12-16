@@ -6,11 +6,18 @@
 package teleriego.controller;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import teleriego.model.Land;
 
 /**
  *
@@ -18,6 +25,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ServletLand", urlPatterns = {"/ServletLand"})
 public class ServletLand extends HttpServlet {
+
+    @PersistenceContext(unitName = "TeleRiegoPU")
+    private EntityManager em;
+    @Resource
+    private javax.transaction.UserTransaction utx;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,12 +43,16 @@ public class ServletLand extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        
         if(request.getSession().getAttribute("membership")==null){
             response.sendRedirect("Login.jsp");
             return;
         }
         
+        int lnadIdInteger = Integer.parseInt(request.getParameter("landid"));
+        BigDecimal landId = new BigDecimal(lnadIdInteger);
+        Land specificLand = em.find(Land.class, landId);
+        
+        request.setAttribute("specificLand", specificLand);
         request.setAttribute("land", true);
         request.getRequestDispatcher("UserView.jsp").forward(request, response);
         
@@ -80,5 +96,16 @@ public class ServletLand extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    public void persist(Object object) {
+        try {
+            utx.begin();
+            em.persist(object);
+            utx.commit();
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", e);
+            throw new RuntimeException(e);
+        }
+    }
 
 }

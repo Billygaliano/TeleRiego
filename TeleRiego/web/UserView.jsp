@@ -111,7 +111,7 @@
                                         <p>Estado: <strong>${land.state}</strong></p>
                                         <p>Último riego: <strong><fmt:formatDate type="date" value="${land.lastDateIrrigation}" /></strong></p>
                                         <p>Humedad: <strong>${land.humidity} %</strong></p>
-                                        <a href="ServletLand">Regar</a>
+                                        <a href="ServletLand?landid=${land.landId}">Regar</a>
                                     </div><!--end .accordion-section-content-->
                                 </div><!--end .accordion-section--> 
                                 <c:set var="i" value="${i+1}"></c:set>
@@ -126,7 +126,7 @@
              <div class="container">
                 <section id="perf" class="section appear clearfix">
                   <div class="container">  
-                      <div class="align-center"><h1>Terreno: Nombre</h1><br> </div>
+                      <div class="align-center"><h1>Terreno: ${specificLand.nameland}</h1><br> </div>
                       <div class="row mar-bot40 col-sm-6" role="group" style="margin-top: 0px">
                           <div id="area">Informacion sobre el área del terreno</div>
                           <div id="humedad">Información sobre la humedad del terreno</div>
@@ -153,7 +153,7 @@
                             <c:set var="i" value="1"></c:set>
                             <c:forEach var="transaction" items="${sessionScope.membership.transactionCollection}">
                                 <div class="accordion-section">
-                                    <a class="accordion-section-title" href="#accordion-${i}">Pedido nº ${transaction.landId.nameland}</a>
+                                    <a class="accordion-section-title" href="#accordion-${i}">Pedido nº ${transaction.norder}</a>
                                     <div id="accordion-${i}" class="accordion-section-content">
                                         <p>Compra de agua para: <strong>${transaction.landId.nameland}</strong></p>
                                         <p>Cantidad de agua: <strong>${transaction.amount} m<sup>3</sup></strong></p>
@@ -218,7 +218,7 @@
         <script type="text/javascript" src="js/accordion.js"></script>
         <script type="text/javascript">
             
-            <c:if test="${param.field}">
+            <c:if test="${land}">
                            // When the window has finished loading create our google map below
             google.maps.event.addDomListener(window, 'load', init);
         
@@ -230,7 +230,7 @@
                     zoom: 11,
 
                     // The latitude and longitude to center the map (always required)
-                    center: new google.maps.LatLng(40.6700, -73.9400), // New York //parametro de localizacion
+                    center: new google.maps.LatLng(${specificLand.latitude}, ${specificLand.longitude}), // New York //parametro de localizacion
 
                     // How you would like to style the map. 
                     // This is where you would paste any style found on Snazzy Maps.

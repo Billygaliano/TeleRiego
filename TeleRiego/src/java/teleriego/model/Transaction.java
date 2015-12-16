@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Transaction.findAll", query = "SELECT t FROM Transaction t"),
-    @NamedQuery(name = "Transaction.findByNOrder", query = "SELECT t FROM Transaction t WHERE t.nOrder = :nOrder"),
+    @NamedQuery(name = "Transaction.findByNOrder", query = "SELECT t FROM Transaction t WHERE t.norder = :norder"),
     @NamedQuery(name = "Transaction.findByAmount", query = "SELECT t FROM Transaction t WHERE t.amount = :amount"),
     @NamedQuery(name = "Transaction.findByPrice", query = "SELECT t FROM Transaction t WHERE t.price = :price"),
     @NamedQuery(name = "Transaction.findByDateOrder", query = "SELECT t FROM Transaction t WHERE t.dateOrder = :dateOrder"),
@@ -47,7 +47,7 @@ public class Transaction implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "N_ORDER")
-    private BigDecimal nOrder;
+    private BigDecimal norder;
     @Basic(optional = false)
     @NotNull
     @Column(name = "AMOUNT")
@@ -76,24 +76,24 @@ public class Transaction implements Serializable {
     public Transaction() {
     }
 
-    public Transaction(BigDecimal nOrder) {
-        this.nOrder = nOrder;
+    public Transaction(BigDecimal norder) {
+        this.norder = norder;
     }
 
-    public Transaction(BigDecimal nOrder, double amount, double price, Date dateOrder, String stateOrder) {
-        this.nOrder = nOrder;
+    public Transaction(BigDecimal norder, double amount, double price, Date dateOrder, String stateOrder) {
+        this.norder = norder;
         this.amount = amount;
         this.price = price;
         this.dateOrder = dateOrder;
         this.stateOrder = stateOrder;
     }
 
-    public BigDecimal getNOrder() {
-        return nOrder;
+    public BigDecimal getNorder() {
+        return norder;
     }
 
-    public void setNOrder(BigDecimal nOrder) {
-        this.nOrder = nOrder;
+    public void setNorder(BigDecimal norder) {
+        this.norder = norder;
     }
 
     public double getAmount() {
@@ -147,7 +147,7 @@ public class Transaction implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (nOrder != null ? nOrder.hashCode() : 0);
+        hash += (norder != null ? norder.hashCode() : 0);
         return hash;
     }
 
@@ -158,7 +158,7 @@ public class Transaction implements Serializable {
             return false;
         }
         Transaction other = (Transaction) object;
-        if ((this.nOrder == null && other.nOrder != null) || (this.nOrder != null && !this.nOrder.equals(other.nOrder))) {
+        if ((this.norder == null && other.norder != null) || (this.norder != null && !this.norder.equals(other.norder))) {
             return false;
         }
         return true;
@@ -166,7 +166,7 @@ public class Transaction implements Serializable {
 
     @Override
     public String toString() {
-        return "teleriego.model.Transaction[ nOrder=" + nOrder + " ]";
+        return "teleriego.model.Transaction[ norder=" + norder + " ]";
     }
     
 }

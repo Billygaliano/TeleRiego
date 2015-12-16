@@ -13,6 +13,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -82,9 +83,9 @@ public class Membership implements Serializable {
     @Size(max = 16)
     @Column(name = "PASSWORD")
     private String password;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "memberNumber")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "memberNumber", fetch = FetchType.EAGER)
     private Collection<Land> landCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "memberNumber")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "memberNumber", fetch = FetchType.EAGER)
     private Collection<Transaction> transactionCollection;
 
     public Membership() {
