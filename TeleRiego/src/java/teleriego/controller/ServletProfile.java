@@ -6,6 +6,7 @@
 package teleriego.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,10 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author inftel12
+ * @author inftel11
  */
-@WebServlet(name = "ServletLogOut", urlPatterns = {"/ServletLogOut"})
-public class ServletLogOut extends HttpServlet {
+@WebServlet(name = "ServletProfile", urlPatterns = {"/ServletProfile"})
+public class ServletProfile extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,8 +32,8 @@ public class ServletLogOut extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if(request.getSession().getAttribute("membership")!=null){
-            request.getSession().invalidate();
-            response.sendRedirect("Login.jsp");
+            request.setAttribute("profile", true);
+            request.getRequestDispatcher("UserView.jsp").forward(request, response);
         }else{  
             response.sendRedirect("Login.jsp");
         }

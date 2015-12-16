@@ -17,7 +17,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import teleriego.model.Membership;
 import viewBean.LoginViewBean;
 
@@ -46,10 +45,10 @@ public class ServletLogin extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {       
        
-        HttpSession session = request.getSession();
-        if(session.getAttribute("membership")!=null){
+        if(request.getSession().getAttribute("membership")!=null){
             request.getRequestDispatcher("UserView.jsp").forward(request, response);
         }
+        
         if(request.getParameter("user")==null || request.getParameter("password")==null){
 //        if(session.isNew() || session.getServletContext().setInitParameter("access", "true")){
 
@@ -62,21 +61,19 @@ public class ServletLogin extends HttpServlet {
         String password = request.getParameter("password");
                            
         Membership membership = em.find(Membership.class, memberNumber);
-
         if(membership==null){
             request.getRequestDispatcher("Login.jsp?errorPassword=true").forward(request, response);
             return;
         }
         
-        String passwordDB = membership.getPassword();       
-
+        String passwordDB = membership.getPassword(); 
         if(!loginViewBean.autentication(passwordDB, password)){
             request.getRequestDispatcher("Login.jsp?errorPassword=true").forward(request, response);
             return;
         }
         
-        session.setAttribute("membership", membership);
-        
+        request.getSession().setAttribute("membership", membership);
+        request.setAttribute("profile", true);
         request.getRequestDispatcher("UserView.jsp").forward(request, response);
 
     }

@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%-- 
     Document   : UserView
@@ -43,10 +44,9 @@
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav" data-0="margin-top:20px;" data-300="margin-top:5px;">
-                            <li><a href="UserView.jsp?test=''">${sessionScope.membership.userName}</a></li>
-                            <li><a href="UserView.jsp?perfil=true">Mi Perfil</a></li>
-                            <li><a href="UserView.jsp?terrenos=true">Mis Terrenos</a></li>
-                            <li><a href="UserView.jsp?transaccion=true">Transacciones</a></li>
+                            <li><a href="ServletProfile">${sessionScope.membership.userName}</a></li>
+                            <li><a href="ServletLands">Mis Terrenos</a></li>
+                            <li><a href="ServletTransaction">Transacciones</a></li>
                             <li><a href="ServletLogOut">Cerrar Sesión</a></li>
                         </ul>
                     </div><!--/.navbar-collapse -->
@@ -54,54 +54,49 @@
             </section>
             </div>
     <c:choose>
-        <c:when test="${param.perfil}">
+        <c:when test="${profile}">
             <!-- Vista Perfil-->
             
             <div class="container">
                 <section id="perf" class="section appear clearfix">
-                  <div class="container">  
-                      <div class="align-center"><h1>Perfil de usuario</h1><br> </div>
-                  <div class="row mar-bot40 col-md-6" role="group" style="margin-top: 0px">                           
-                                 
-                      <h2>Número de usuario: ${sessionScope.membership.memberNumber}</h2><br>
-                      <h2>DNI: ${sessionScope.membership.dni}</h2><br>
-                      <h2>Nombre y apellidos: ${sessionScope.membership.userName} ${sessionScope.membership.surname}</h2><br>
-                      <h2>Dirección: ${sessionScope.membership.address}<br></h2><h3></h3><br>
-                      <h2>Teléfono: ${sessionScope.membership.phone}</h2><br>
-                      <h2>E-Mail: ${sessionScope.membership.email}</h2><br>
-                      <a href="UserView.jsp?perfil=true&changepass=true"><button type="button" id="changepass" class="line-btn green">Cambiar Contraseña</button></a>                         
-                  </div>
-                      <div class="row mar-bot40 col-lg-offset-2 col-md-4" role="group" style="margin-top:0px">
-                        <c:if test="${param.changepass}">
-                        <div class="cform" id="contact-form">
-                                <div id="sendmessage">
-                                    Your message has been sent. Thank you!
-                                </div>
-                                <form action="ServletChangePass" method="post" role="form">
-                                    <div class="wow bounceIn">
-                                        <div class="form-group">
-                                            <label for="name">Contraseña Actual</label>
-                                            <input type="password" name="oldPass" class="form-control" id="user" placeholder="" data-rule="required" data-msg="Por favor, introduca contraseña" />
-                                            <div class="validation"></div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Nueva Contraseña</label>
-                                            <input type="password" class="form-control" name="newPass" id="password" placeholder="" data-rule="required" data-msg="Por favor, introduzca contraseña" />
-                                            <div class="validation"></div>
-                                        </div>
-                                    <button type="submit" class="line-btn green">Cambiar</button>
-                                </form>
-
-                            </div>
+                    <div class="container">  
+                        <div class="align-center"><h2>Mi perfil</h2><br> </div>
+                        <div class="row mar-bot40 col-md-6" role="group" style="margin-top: 0px"> 
+                            <p>Número de usuario: <strong>${sessionScope.membership.memberNumber}</strong></p>
+                            <p>DNI: <strong>${sessionScope.membership.dni}</strong></p>
+                            <p>Nombre y apellidos: <strong>${sessionScope.membership.userName} ${sessionScope.membership.surname}</strong></p>
+                            <p>Dirección: <strong>${sessionScope.membership.address}</strong></p>
+                            <p>Teléfono: <strong>${sessionScope.membership.phone}</strong></p>
+                            <p>E-Mail: <strong>${sessionScope.membership.email}</strong></p>
+                            <a href="ServletChangePass"><button type="button" id="changepass" class="line-btn green">Cambiar Contraseña</button></a>                         
                         </div>
-                        </c:if>
-                      </div>    
-                  </div>
+                        <div class="row mar-bot40 col-lg-offset-2 col-md-4" role="group" style="margin-top:0px">
+                            <c:if test="${param.changepass}">
+                                <div class="cform" id="contact-form">
+                                    <form action="ServletChangePass" method="post" role="form">
+                                        <div class="wow bounceIn">
+                                            <div class="form-group">
+                                                <label for="name">Contraseña Actual</label>
+                                                <input type="password" name="oldPass" class="form-control" id="user" placeholder="" data-rule="required" data-msg="Por favor, introduca contraseña" />
+                                                <div class="validation"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email">Nueva Contraseña</label>
+                                                <input type="password" class="form-control" name="newPass" id="password" placeholder="" data-rule="required" data-msg="Por favor, introduzca contraseña" />
+                                                <div class="validation"></div>
+                                            </div>
+                                            <button type="submit" class="line-btn green">Cambiar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </c:if>
+                        </div>    
+                    </div>
                 </section>
             </div>
             
         </c:when>
-        <c:when test="${param.terrenos}">
+        <c:when test="${lands}">
             <!-- Vista Terrenos-->
             <div class="container">
                 <section id="perf" class="section appear clearfix">
@@ -114,21 +109,15 @@
                                   <tr>
                                       <th><h4>Nombre</h4></th>
                                       <th><h4>Estado</h4></th>
-                                      <th><h4>Ult. Riego</h4></th>
+                                      <th><h4>Último riego</h4></th>
                                       <th><h4>Humedad</h4></th>
                                       <th>  </th>
                                   </tr>
                               </thead>
                               <tbody>
-                                <!--foreach -->  
-                                  <tr>
-                                      <td>Nombre</td>
-                                      <td>Estado</td>
-                                      <!-- choose regando o fecha-->
-                                      <td>Regando</td><!--end choose-->
-                                      <td>Humedad %</td>
-                                      <td><a href="UserView.jsp?field=true"><button type="button">Go</button></a></td>
-                                  </tr><!--endforeach-->
+                                  <c:forEach var="land" items="${sessionScope.membership.membershipLandCollection}">
+                                      
+                                  </c:forEach>
                               </tbody>
                           </table>
                         
@@ -157,85 +146,36 @@
                 </section>
             </div>
         </c:when>
-        <c:when test="${param.transaccion}">
+        <c:when test="${transaction}">
             
             <!-- Vista Transacciones-->
             <div class="container">
                 <section id="perf" class="section appear clearfix">
                     <div class="container">  
-                        <div class="align-center"><h1>Transacciones</h1><br> </div>                       
-                            <div class="accordion">
-                                    <div class="accordion-section">
-                                            <a class="accordion-section-title" href="#accordion-1">Pedido nº "numPedido"</a>
-                                            <div id="accordion-1" class="accordion-section-content">
-                                                <p>Compra de agua para "nombreTerreno"</p>
-                                                <p>Cantidad de agua: X m<sup>3</sup></p>
-                                                <p>Precio total: X €</p>
-                                                <p>Fecha del pedido: XX/XX/XXXX</p>
-                                                <p>Estado del pedido: pendiente OR pagado</p>
-                                            </div><!--end .accordion-section-content-->
-                                    </div><!--end .accordion-section-->
-
-                                    <div class="accordion-section">
-                                            <a class="accordion-section-title" href="#accordion-2">Pedido nº "numPedido"</a>
-                                            <div id="accordion-2" class="accordion-section-content">
-                                                <p>Compra de agua para "nombreTerreno"</p>
-                                                <p>Cantidad de agua: X m<sup>3</sup></p>
-                                                <p>Precio total: X €</p>
-                                                <p>Fecha del pedido: XX/XX/XXXX</p>
-                                                <p>Estado del pedido: pendiente OR pagado</p>
-                                            </div><!--end .accordion-section-content-->
-                                    </div><!--end .accordion-section-->
-
-                                    <div class="accordion-section">
-                                            <a class="accordion-section-title" href="#accordion-3">Pedido nº "numPedido"</a>
-                                            <div id="accordion-3" class="accordion-section-content">
-                                                <p>Compra de agua para "nombreTerreno"</p>
-                                                <p>Cantidad de agua: X m<sup>3</sup></p>
-                                                <p>Precio total: X €</p>
-                                                <p>Fecha del pedido: XX/XX/XXXX</p>
-                                                <p>Estado del pedido: pendiente OR pagado</p>
-                                            </div><!--end .accordion-section-content-->
-                                    </div><!--end .accordion-section-->
-                            </div><!--end .accordion-->
+                        <div class="align-center"><h1>Transacciones</h1><br> </div>  
+                        
+                        <div class="accordion">      
+                            <c:set var="i" value="1"></c:set>
+                            <c:forEach var="transaction" items="${sessionScope.membership.transactionCollection}">
+                                <div class="accordion-section">
+                                    <a class="accordion-section-title" href="#accordion-${i}">Pedido nº "numPedido"</a>
+                                    <div id="accordion-${i}" class="accordion-section-content">
+                                        
+                                        <p>Compra de agua para: <strong>${transaction.landId.nameland}</strong></p>
+                                        <p>Cantidad de agua: <strong>${transaction.amount} m<sup>3</sup></strong></p>
+                                        <p>Precio total: <strong>${transaction.price} €</strong></p>
+                                        <p>Fecha del pedido: <strong><fmt:formatDate type="date" value="${transaction.dateOrder}" /></strong></p>
+                                        <p>Estado del pedido: <strong>${transaction.stateOrder}</strong></p>
+                                    </div><!--end .accordion-section-content-->
+                                </div><!--end .accordion-section--> 
+                                <c:set var="i" value="${i+1}"></c:set>
+                            </c:forEach>
+                        </div><!--end .accordion-->
                     </div>
                 </section>
             </div>
             
-        </c:when>    
-        <c:otherwise>
-            <!-- Vista Principal Usuario-->
-            <div class="container">
-            <section id="user-principal" class="section appear clearfix">
-                  
-                    <div class="row mar-bot40 col-md-12" role="group" style="margin-top: 40px">
-                        <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                        <div class="btn-group" role="group">
-                            <a href="UserView.jsp?perfil=true?userName=${membership.userName}"><button type="button" class="btn btn-theme"><h1>Mi Perfil</h1></button></a>
-                        </div>
-                        </div>
-                    </div>
-                     <div class="row mar-bot40 col-md-12" role="group" style="margin-top: 40px">
-                        <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                        <div class="btn-group" role="group">
-                            <a href="UserView.jsp?terreno=true"><button type="button" class="btn btn-theme"><h1>Mis Terrenos</h1></button></a>
-                        </div>
-                        </div>
-                    </div>
-                     <div class="row mar-bot40 col-md-12" role="group" style="margin-top: 40px">
-                        <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                        <div class="btn-group" role="group">
-                            <a href="UserView.jsp?transaccion=true"><button type="button" class="btn btn-theme"><h1>Transacciones</h1></button></a>
-                        </div>
-                        </div>
-                    </div>                    
-                 
-                 </section>
-            </div>
-            
- 
-            
-        </c:otherwise>
+        </c:when>  
     </c:choose>
             
             <section id="footer" class="section footer">

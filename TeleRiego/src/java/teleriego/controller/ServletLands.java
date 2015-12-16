@@ -14,10 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author inftel12
+ * @author inftel11
  */
-@WebServlet(name = "ServletLogOut", urlPatterns = {"/ServletLogOut"})
-public class ServletLogOut extends HttpServlet {
+@WebServlet(name = "ServletLands", urlPatterns = {"/ServletLands"})
+public class ServletLands extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,8 +31,8 @@ public class ServletLogOut extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if(request.getSession().getAttribute("membership")!=null){
-            request.getSession().invalidate();
-            response.sendRedirect("Login.jsp");
+            request.setAttribute("lands", true);
+            request.getRequestDispatcher("UserView.jsp").forward(request, response);
         }else{  
             response.sendRedirect("Login.jsp");
         }
