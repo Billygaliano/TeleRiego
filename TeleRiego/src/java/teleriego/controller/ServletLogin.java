@@ -50,7 +50,9 @@ public class ServletLogin extends HttpServlet {
         if(session.getAttribute("membership")!=null){
             request.getRequestDispatcher("UserView.jsp").forward(request, response);
         }
-         if(session.isNew() || session.getServletContext().setInitParameter("access", "true")){
+        if(request.getParameter("user")==null || request.getParameter("password")==null){
+//        if(session.isNew() || session.getServletContext().setInitParameter("access", "true")){
+
             response.sendRedirect("Login.jsp");
             return;
         }
