@@ -14,9 +14,9 @@
                   <div class="container">  
                       <div class="align-center"><h1>Terreno: ${specificLand.nameland}</h1><br> </div>
                       <div class="row mar-bot40 col-sm-6" role="group" style="margin-top: 0px">
-                          <div id="area">Informacion sobre el área del terreno</div>
-                          <div id="humedad">Información sobre la humedad del terreno</div>
-                          <div id="fechariego">Información sobre la fecha del último riego</div>                                                  
+                          <div id="area">Informacion sobre el área del terreno: <strong>${specificLand.squareMeters}</strong></div>
+                          <div id="humedad">Información sobre la humedad del terreno: <strong>${specificLand.humidity} %</strong></div>
+                          <div id="fechariego">Información sobre la fecha del último riego: <strong><fmt:formatDate type="date" value="${specificLand.lastDateIrrigation}" /></strong></div>                                                  
                       </div>
                       <div class="row mar-bot40 col-sm-6" role="group" style="margin-top: 0px">
                           <div id="map">Información sobre la localización MAPA</div>

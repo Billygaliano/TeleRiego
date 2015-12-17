@@ -78,7 +78,7 @@
                     zoom: 11,
 
                     // The latitude and longitude to center the map (always required)
-                    center: new google.maps.LatLng(${specificLand.latitude}, ${specificLand.longitude}), // New York //parametro de localizacion
+                    center: new google.maps.LatLng(${specificLand.longitude}, ${specificLand.latitude}), // New York //parametro de localizacion
 
                     // How you would like to style the map. 
                     // This is where you would paste any style found on Snazzy Maps.
