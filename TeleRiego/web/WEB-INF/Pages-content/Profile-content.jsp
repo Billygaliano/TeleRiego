@@ -41,7 +41,16 @@
                                         </div>
                                     </form>
                                 </div>
-                            </c:if>
+                            </c:if >
+                            <c:choose>
+                                <c:when test="${correctUpdate}">
+                                    <p class="verificate">Tu contraseña ha sido actualizada</p>
+                                </c:when>
+                                <c:when test="${incorrectUpdate}">
+                                    <p class="error">Tu contraseña no se ha podido actualizar</p>
+                                </c:when>
+                            </c:choose>
+
                         </div>    
                     </div>
                 </section>

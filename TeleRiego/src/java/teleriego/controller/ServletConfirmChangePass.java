@@ -43,9 +43,18 @@ public class ServletConfirmChangePass extends HttpServlet {
      
         Membership user =  (Membership) request.getSession().getAttribute("membership");
         Boolean correctUpate = membershipFacade.changePassword(oldPass, newPass, user.getMemberNumber());
-        request.getRequestDispatcher("WEB-INF/Pages/Profile.jsp?correctUpdate=correctUpdate").forward(request, response);
+        System.out.println(correctUpate);
+        if(correctUpate==true){
+            request.setAttribute("correctUpdate", correctUpate);
+            request.getRequestDispatcher("WEB-INF/Pages/Profile.jsp?changepass=true").forward(request, response);
+        }
+        else{
+            request.setAttribute("incorrectUpdate", true);
+            request.getRequestDispatcher("WEB-INF/Pages/Profile.jsp?changepass=true").forward(request, response);
+        }
+        
     }
-
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

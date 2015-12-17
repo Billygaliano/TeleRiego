@@ -48,7 +48,7 @@ public class ServletLogin extends HttpServlet {
        
         if(request.getSession().getAttribute("membership")!=null){
             request.setAttribute("profile", true);
-            request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/Pages/Profile.jsp").forward(request, response);
             return;
         }
         

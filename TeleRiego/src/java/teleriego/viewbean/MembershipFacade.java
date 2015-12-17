@@ -38,11 +38,12 @@ public class MembershipFacade extends AbstractFacade<Membership> {
         if(oldPass.equals(userDB.getPassword())){  
             try {  
                 userDB.setPassword(newPass);
-                em.persist(userDB);   
+                em.persist(userDB);
+                correctUpdate = true;
             } catch (Exception ex) {
                 Logger.getLogger(MembershipFacade.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return correctUpdate;
-    }   
+    }
 }
