@@ -188,6 +188,17 @@ table {
     font-weight: bold;
 }
 
+.land-details{
+    margin-bottom: 21px;
+}
+
+.TMax{
+    color: red;
+}
+
+.TMin{
+    color: blue;
+}
 td,
 th {
   padding: 0;

@@ -114,6 +114,18 @@ a:hover {
 	padding: 0;
 }
 
+.land-details{
+    margin-bottom: 21px;
+}
+
+.TMax{
+    color: red;
+}
+
+.TMin{
+    color: blue;
+}
+
 .error{
     margin-top: 20px;
     color: red;

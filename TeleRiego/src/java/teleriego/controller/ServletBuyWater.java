@@ -7,33 +7,23 @@ package teleriego.controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.json.JsonArray;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import teleriego.client.WeatherClient;
 import teleriego.model.Land;
-import teleriego.model.Membership;
 import teleriego.viewbean.LandFacade;
-import teleriego.viewbean.MembershipFacade;
 
 /**
  *
- * @author inftel12
+ * @author inftel11
  */
-@WebServlet(name = "ServletLand", urlPatterns = {"/ServletLand"})
-public class ServletLand extends HttpServlet {
-    @EJB
-    private MembershipFacade membershipFacade;
+@WebServlet(name = "ServletBuyWater", urlPatterns = {"/ServletBuyWater"})
+public class ServletBuyWater extends HttpServlet {
     @EJB
     private LandFacade landFacade;
-
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,26 +37,16 @@ public class ServletLand extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        if(request.getSession().getAttribute("memberNumber")==null){
-            request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
-            return;
-        }
+//        if(request.getSession().getAttribute("memberNumber")==null){
+//            request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
+//            return;
+//        }
         
-        int lnadIdInteger = Integer.parseInt(request.getParameter("landid"));
-        BigDecimal landId = new BigDecimal(lnadIdInteger);
-        Land specificLand = landFacade.getLand(landId);
+//        int lnadIdInteger = Integer.parseInt(request.getParameter("landid"));
+//        BigDecimal landId = new BigDecimal(lnadIdInteger);
+//        Land specificLand = landFacade.getLand(landId);
         
-        WeatherClient weatherClient = new WeatherClient();
-        JsonArray wsResult = weatherClient.findAll_JSON(JsonArray.class); 
-        
-        BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
-        Membership membership = membershipFacade.getMembership(memberNumber);
-        request.setAttribute("weatherPrediction", wsResult);
-        request.setAttribute("membership", membership);
-        request.setAttribute("specificLand", specificLand);
-        request.setAttribute("land", true);
-        request.getRequestDispatcher("WEB-INF/Pages/Land.jsp").forward(request, response);
-        
+        request.getRequestDispatcher("WEB-INF/Pages/BuyWater.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

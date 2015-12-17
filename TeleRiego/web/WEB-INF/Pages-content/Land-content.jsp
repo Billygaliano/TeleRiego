@@ -9,20 +9,88 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
-             <div class="container">
-                <section id="perf" class="section appear clearfix">
-                  <div class="container">  
-                      <div class="align-center"><h1>Terreno: ${specificLand.nameland}</h1><br> </div>
-                      <div class="row mar-bot40 col-sm-6" role="group" style="margin-top: 0px">
-                          <div id="area">Informacion sobre el área del terreno: <strong>${specificLand.squareMeters}</strong></div>
-                          <div id="humedad">Información sobre la humedad del terreno: <strong>${specificLand.humidity} %</strong></div>
-                          <div id="fechariego">Información sobre la fecha del último riego: <strong><fmt:formatDate type="date" value="${specificLand.lastDateIrrigation}" /></strong></div>                                                  
-                      </div>
-                      <div class="row mar-bot40 col-sm-6" role="group" style="margin-top: 0px">
-                          <div id="map">Información sobre la localización MAPA</div>
-                          <div id="agua">Información sobre el agua</div>
-                          <div id="estado">Información sobre el estado</div>
-                      </div>                      
-                  </div>
-                </section>
+<div class="container">
+    <section id="perf" class="section appear clearfix">
+        <div class="container">  
+            <div class="align-center"><h2>Terreno: ${specificLand.nameland}</h2><br> </div>
+            <div class="row mar-bot40 col-sm-6" role="group" style="margin-top: 0px">
+                <div class="land-details">
+                    <h3>Predicción próximos días</h3>
+                    <table> 
+                        <tbody> 
+                            <tr>                               
+                                <c:forEach var="predictionForDay" items="${weatherPrediction}"> 
+                                    <td>  
+                                        <!--http://stackoverflow.com/questions/18829354/converting-string-to-date-format-in-jsp-->
+                                        <p class="nomDay">${predictionForDay.dateWeather}</p>
+                                        <c:choose>
+                                            <c:when test="${predictionForDay.prediction eq '\"Soleado\"'}">
+                                                <p class="simbDay"><img src="http://www.tiempo.com/css/images/widget/g20/new/big-1.png" alt="Soleado" title="Soleado"></p>
+                                            </c:when>
+                                            <c:when test="${predictionForDay.prediction eq '\"Poco nuboso\"'}">
+                                                <p class="simbDay"><img src="http://www.tiempo.com/css/images/widget/g20/new/big-2.png" alt="Poco nuboso" title="Poco nuboso"></p>
+                                            </c:when>
+                                            <c:when test="${predictionForDay.prediction eq '\"Muy nuboso\"'}">
+                                                <p class="simbDay"><img src="http://www.tiempo.com/css/images/widget/g20/new/big-3.png" alt="Muy nuboso" title="Muy nuboso"></p>
+                                            </c:when>
+                                        </c:choose>
+                                        <p class="temps"> 
+                                            <span class="TMax">${predictionForDay.tmax}°</span> 
+                                            <span class="TMin">${predictionForDay.tmin}°</span> 
+                                        </p> 
+                                        <p class="nomData">Lluvia: <span class="data">${predictionForDay.precipitations} mm</span><p> 
+                                        <p class="nomData">Prob.: <span class="data">${predictionForDay.probability}%</span></p>
+                                    </td>
+                                </c:forEach>
+                            </tr> 
+                        </tbody>
+                    </table>
+                </div>
+                <div class="land-details">
+                    <h3>Detalles del terreno</h3>
+                    <p id="area">Área del terreno: <strong>${specificLand.squareMeters} m<sup>2</sup></strong></p>
+                    <p id="humedad">Humedad del terreno: <strong>${specificLand.humidity}%</strong></p>
+                    <p id="fechariego">Fecha del último riego: <strong><fmt:formatDate type="date" value="${specificLand.lastDateIrrigation}" /></strong></p>
+                </div>
+                <div class="land-details">
+                    <h3>Agua disponible para regar</h3>
+                    <p id="humedad">Agua disponible para regar: <strong>${specificLand.WMAvailable}m<sup>3</sup></strong></p>
+                    <form action="ServletBuyWater" method="post" role="form">
+                        <button type="submit" class="line-btn green">Comprar agua</button>
+                    </form>
+                </div>
+                <div class="land-details">
+                    <c:choose>
+                        <c:when test="${specificLand.state eq 'regando'}">
+                            <h3>Estado del riego</h3>
+                            <span>Regando...</span>
+                            <form action="ServletLand" method="post" role="form">
+                                <button type="submit" class="line-btn green">Dejar de regar</button>
+                            </form>
+                        </c:when>
+                        <c:otherwise>
+                            <h3>Recomendación de riego</h3>
+                            <c:choose>
+                                <c:when test="${needWater}">
+                                    <p>Le recomendamos que riegue este terreno.</p>
+                                    <form action="ServletLand" method="post" role="form">
+                                        <button type="submit" class="line-btn green">Regar</button>
+                                    </form>
+                                </c:when>
+                                <c:otherwise>
+                                    <p>Este terreno no necesita regarse.</p>
+                                    <form action="ServletLand" method="post" role="form">
+                                        <button type="submit" class="line-btn green">Regar</button>
+                                    </form>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
             </div>
+            <div class="row mar-bot40 col-sm-6" role="group" style="margin-top: 0px">
+                <p id="map">Información sobre la localización MAPA</p>
+            </div>                      
+        </div>
+    </section>
+</div>
