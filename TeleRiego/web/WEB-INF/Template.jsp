@@ -37,7 +37,7 @@
     </head>
 	 
     <body>
-        <jsp:include page="/WEB-INF/header.jsp"></jsp:include>
+            <jsp:include page="/WEB-INF/header.jsp"></jsp:include>
   
             <jsp:include page="/WEB-INF/Pages-content/${param.content}.jsp"></jsp:include>
         
