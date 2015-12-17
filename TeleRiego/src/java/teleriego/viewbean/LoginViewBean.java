@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package viewBean;
-
-/**
- *
- * @author inftel12
+package teleriego.viewbean;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
+
 public class LoginViewBean {
     private String user;
     private String password;
