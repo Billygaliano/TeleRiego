@@ -22,9 +22,6 @@
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">
                             <div class="cform" id="contact-form">
-                                <div id="sendmessage">
-                                    Your message has been sent. Thank you!
-                                </div>
                                 <form action="ServletLogin" method="post" role="form" class="ServletLogin">
                                     <div class="wow bounceIn">
                                         <div class="form-group">
