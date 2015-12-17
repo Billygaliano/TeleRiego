@@ -7,18 +7,14 @@ package teleriego.controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.annotation.Resource;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import teleriego.model.Membership;
-import teleriego.viewbean.LoginViewBean;
+import teleriego.viewbean.MembershipFacade;
 
 
 /**
@@ -27,12 +23,8 @@ import teleriego.viewbean.LoginViewBean;
  */
 @WebServlet(name = "ServletLogin", urlPatterns = {"/ServletLogin"})
 public class ServletLogin extends HttpServlet {
-
-    @PersistenceContext(unitName = "TeleRiegoPU")
-    private EntityManager em;
-    @Resource
-    private javax.transaction.UserTransaction utx;
-    private LoginViewBean loginViewBean;
+    @EJB
+    private MembershipFacade membershipFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,37 +37,37 @@ public class ServletLogin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {       
-       
         if(request.getSession().getAttribute("membership")!=null){
             request.setAttribute("profile", true);
             request.getRequestDispatcher("WEB-INF/Pages/Profile.jsp").forward(request, response);
             return;
         }
-        
-        if(request.getParameter("user")==null || request.getParameter("password")==null){
+
+        if(request.getParameter("memberNumber")==null || request.getParameter("password")==null){
             request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
             return;
         }
         
-        int memberUserInteger = Integer.parseInt(request.getParameter("user"));
-        BigDecimal memberNumber = new BigDecimal(memberUserInteger);                           
-        Membership membership = em.find(Membership.class, memberNumber);
-        if(membership==null){
+        int memberNumberInteger = Integer.parseInt(request.getParameter("memberNumber"));
+        BigDecimal memberNumber = new BigDecimal(memberNumberInteger);
+        boolean testing = membershipFacade.testingMemberUser(memberNumber);
+        if(!testing){
             request.getRequestDispatcher("WEB-INF/Pages/Login.jsp?errorPassword=true").forward(request, response);
             return;
         }
         
-        String password = request.getParameter("password");
-        String passwordDB = membership.getPassword(); 
-        if(!loginViewBean.autentication(passwordDB, password)){
+        String password = request.getParameter("password"); 
+        boolean passwordAutenticated = membershipFacade.autentication(memberNumber, password);
+        if(!passwordAutenticated){
             request.getRequestDispatcher("WEB-INF/Pages/Login.jsp?errorPassword=true").forward(request, response);
             return;
         }
         
-        request.getSession().setAttribute("membership", membership);
+        request.getSession().setAttribute("memberNumber", memberNumber);
+        Membership membership = membershipFacade.getMembership(memberNumber);
+        request.setAttribute("membership", membership);
         request.setAttribute("profile", true);
         request.getRequestDispatcher("WEB-INF/Pages/Profile.jsp").forward(request, response);
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -116,22 +108,5 @@ public class ServletLogin extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    public void persist(Object object) {
-        try {
-            utx.begin();
-            em.persist(object);
-            utx.commit();
-        } catch (Exception e) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", e);
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public void init() throws ServletException {
-        super.init(); //To change body of generated methods, choose Tools | Templates.
-        loginViewBean = new LoginViewBean();
-    }
 
 }

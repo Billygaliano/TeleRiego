@@ -16,7 +16,7 @@
                         <div class="align-center"><h1>Mis Terrenos</h1><br> </div>
                         <div class="accordion">      
                             <c:set var="i" value="1"></c:set>
-                            <c:forEach var="land" items="${sessionScope.membership.landCollection}">
+                            <c:forEach var="land" items="${membership.landCollection}">
                                 <div class="accordion-section">
                                     <a class="accordion-section-title" href="#accordion-${i}">${land.nameland}</a>
                                     <div id="accordion-${i}" class="accordion-section-content">

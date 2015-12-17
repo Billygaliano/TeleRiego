@@ -7,9 +7,8 @@ package teleriego.controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.ServletException;
@@ -18,6 +17,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import teleriego.model.Land;
+import teleriego.viewbean.LandFacade;
+import teleriego.viewbean.MembershipFacade;
 
 /**
  *
@@ -25,11 +26,9 @@ import teleriego.model.Land;
  */
 @WebServlet(name = "ServletLand", urlPatterns = {"/ServletLand"})
 public class ServletLand extends HttpServlet {
+    @EJB
+    private LandFacade landFacade;
 
-    @PersistenceContext(unitName = "TeleRiegoPU")
-    private EntityManager em;
-    @Resource
-    private javax.transaction.UserTransaction utx;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,15 +42,18 @@ public class ServletLand extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        if(request.getSession().getAttribute("membership")==null){
+        if(request.getSession().getAttribute("memberNumber")==null){
             request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
             return;
         }
         
         int lnadIdInteger = Integer.parseInt(request.getParameter("landid"));
         BigDecimal landId = new BigDecimal(lnadIdInteger);
-        Land specificLand = em.find(Land.class, landId);
+        Land specificLand = landFacade.getLand(landId);
         
+//        BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
+//        Membership membership = membershipFacade.getMembership(memberNumber);
+//        request.setAttribute("membership", membership);
         request.setAttribute("specificLand", specificLand);
         request.setAttribute("land", true);
         request.getRequestDispatcher("WEB-INF/Pages/Land.jsp").forward(request, response);
@@ -96,16 +98,5 @@ public class ServletLand extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    public void persist(Object object) {
-        try {
-            utx.begin();
-            em.persist(object);
-            utx.commit();
-        } catch (Exception e) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", e);
-            throw new RuntimeException(e);
-        }
-    }
 
 }

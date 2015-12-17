@@ -78,7 +78,7 @@
                                     <div class="wow bounceIn">
                                         <div class="form-group">
                                             <label for="name">Usuario</label>
-                                            <input type="text" name="user" class="form-control" id="user" placeholder="Nombre" data-rule="maxlen:4" data-msg="Por favor, introduca usuario" />
+                                            <input type="text" name="memberNumber" class="form-control" id="user" placeholder="Nombre" data-rule="maxlen:4" data-msg="Por favor, introduca usuario" />
                                             <div class="validation"></div>
                                         </div>
                                         <div class="form-group">

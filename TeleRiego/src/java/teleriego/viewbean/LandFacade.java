@@ -5,6 +5,7 @@
  */
 package teleriego.viewbean;
 
+import java.math.BigDecimal;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,6 +27,11 @@ public class LandFacade extends AbstractFacade<Land> {
 
     public LandFacade() {
         super(Land.class);
+    }
+    
+    public Land getLand(BigDecimal landId){
+        Land specificLand = em.find(Land.class, landId);
+    return specificLand;
     }
     
 }

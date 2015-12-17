@@ -6,7 +6,6 @@
 package teleriego.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,7 +31,7 @@ public class ServletProfile extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        if(request.getSession().getAttribute("membership")==null){  
+        if(request.getSession().getAttribute("memberNumber")==null){  
             request.getRequestDispatcher("Login.jsp").forward(request, response);
             return;
         }

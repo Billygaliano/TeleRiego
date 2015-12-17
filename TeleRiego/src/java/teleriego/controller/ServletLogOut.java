@@ -31,7 +31,7 @@ public class ServletLogOut extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        if(request.getSession().getAttribute("membership")==null){
+        if(request.getSession().getAttribute("memberNumber")==null){
             request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
             return;
         }

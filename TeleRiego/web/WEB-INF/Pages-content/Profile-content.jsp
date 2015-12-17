@@ -14,12 +14,12 @@
                     <div class="container">  
                         <div class="align-center"><h2>Mi perfil</h2><br> </div>
                         <div class="row mar-bot40 col-md-6" role="group" style="margin-top: 0px"> 
-                            <p>Número de usuario: <strong>${sessionScope.membership.memberNumber}</strong></p>
-                            <p>DNI: <strong>${sessionScope.membership.dni}</strong></p>
-                            <p>Nombre y apellidos: <strong>${sessionScope.membership.userName} ${sessionScope.membership.surname}</strong></p>
-                            <p>Dirección: <strong>${sessionScope.membership.address}</strong></p>
-                            <p>Teléfono: <strong>${sessionScope.membership.phone}</strong></p>
-                            <p>E-Mail: <strong>${sessionScope.membership.email}</strong></p>
+                            <p>Número de usuario: <strong>${membership.memberNumber}</strong></p>
+                            <p>DNI: <strong>${membership.dni}</strong></p>
+                            <p>Nombre y apellidos: <strong>${membership.userName} ${membership.surname}</strong></p>
+                            <p>Dirección: <strong>${membership.address}</strong></p>
+                            <p>Teléfono: <strong>${membership.phone}</strong></p>
+                            <p>E-Mail: <strong>${membership.email}</strong></p>
                             <a href="ServletChangePass"><button type="button" id="changepass" class="line-btn green">Cambiar Contraseña</button></a>                         
                         </div>
                         <div class="row mar-bot40 col-lg-offset-2 col-md-4" role="group" style="margin-top:0px">

@@ -6,11 +6,15 @@
 package teleriego.controller;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import teleriego.model.Membership;
+import teleriego.viewbean.MembershipFacade;
 
 /**
  *
@@ -18,6 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ServletLands", urlPatterns = {"/ServletLands"})
 public class ServletLands extends HttpServlet {
+    @EJB
+    private MembershipFacade membershipFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,11 +37,13 @@ public class ServletLands extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        if(request.getSession().getAttribute("membership")==null){
+        if(request.getSession().getAttribute("memberNumber")==null){
             request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
             return;
         }
-        
+        BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
+        Membership membership = membershipFacade.getMembership(memberNumber);
+        request.setAttribute("membership", membership);
         request.setAttribute("lands", true);
         request.getRequestDispatcher("WEB-INF/Pages/Lands.jsp").forward(request, response);
         

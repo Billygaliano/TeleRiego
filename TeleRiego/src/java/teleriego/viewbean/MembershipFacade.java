@@ -46,4 +46,29 @@ public class MembershipFacade extends AbstractFacade<Membership> {
         }
         return correctUpdate;
     }
+    
+    public boolean testingMemberUser (BigDecimal memberNumber){
+        boolean testing=false;
+        Membership membership = em.find(Membership.class, memberNumber);
+        if(membership!=null){
+            testing=true;
+        }
+        return testing;
+    }
+    
+        
+    public boolean autentication(BigDecimal memberNumber,String password){
+        boolean passwordAutenticated = false;   
+        Membership membership = em.find(Membership.class, memberNumber);
+        String passwordDB = membership.getPassword();
+        if(passwordDB.equals(password)){
+             passwordAutenticated = true;
+        }
+        return passwordAutenticated;
+    }
+    
+    public Membership getMembership(BigDecimal memberNumber){
+        Membership membership = em.find(Membership.class, memberNumber);
+        return membership;
+    }
 }
