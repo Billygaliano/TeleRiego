@@ -25,7 +25,7 @@
                         <div class="row mar-bot40 col-lg-offset-2 col-md-4" role="group" style="margin-top:0px">
                             <c:if test="${param.changepass}">
                                 <div class="cform" id="contact-form">
-                                    <form action="ServletChangePass" method="post" role="form">
+                                    <form action="ServletConfirmChangePass" method="post" role="form">
                                         <div class="wow bounceIn">
                                             <div class="form-group">
                                                 <label for="name">Contraseña Actual</label>
@@ -37,7 +37,7 @@
                                                 <input type="password" class="form-control" name="newPass" id="password" placeholder="" data-rule="required" data-msg="Por favor, introduzca contraseña" />
                                                 <div class="validation"></div>
                                             </div>
-                                            <button type="submit" class="line-btn green">Cambiar</button>
+                                               <button type="submit" class="line-btn green">Cambiar Contraseña</button>        
                                         </div>
                                     </form>
                                 </div>

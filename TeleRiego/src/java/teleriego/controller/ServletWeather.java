@@ -34,7 +34,7 @@ public class ServletWeather extends HttpServlet {
             throws ServletException, IOException {
         WeatherClient weatherClient = new WeatherClient();
         String wsResult = weatherClient.findAll_JSON(String.class);
-        
+        System.out.println(wsResult);   
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

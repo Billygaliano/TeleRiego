@@ -19,11 +19,13 @@ import teleriego.viewbean.MembershipFacade;
 
 /**
  *
- * @author inftel12
+ * @author inftel11
  */
-@WebServlet(name = "ServletChangePass", urlPatterns = {"/ServletChangePass"})
-public class ServletChangePass extends HttpServlet {
-
+@WebServlet(name = "ServletConfirmChangePass", urlPatterns = {"/ServletConfirmChangePass"})
+public class ServletConfirmChangePass extends HttpServlet {
+    @EJB
+    private MembershipFacade membershipFacade;
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,13 +38,12 @@ public class ServletChangePass extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        if(request.getSession().getAttribute("membership")==null){
-            request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
-            return;
-        }
-        
-        request.getRequestDispatcher("WEB-INF/Pages/Profile.jsp?changepass=true").forward(request, response);   
+        String oldPass = request.getParameter("oldPass");
+        String newPass = request.getParameter("newPass");
+     
+        Membership user =  (Membership) request.getSession().getAttribute("membership");
+        Boolean correctUpate = membershipFacade.changePassword(oldPass, newPass, user.getMemberNumber());
+        request.getRequestDispatcher("WEB-INF/Pages/Profile.jsp?correctUpdate=correctUpdate").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
