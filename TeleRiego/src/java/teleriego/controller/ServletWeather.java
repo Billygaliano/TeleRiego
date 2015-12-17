@@ -19,7 +19,7 @@ import teleriego.client.WeatherClient;
  * @author inftel10
  */
 @WebServlet(name = "pruebaCLiente", urlPatterns = {"/pruebaCLiente"})
-public class pruebaCLiente extends HttpServlet {
+public class ServletWeather extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,8 +33,8 @@ public class pruebaCLiente extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         WeatherClient weatherClient = new WeatherClient();
-        String wsResult = weatherClient.find_JSON(String.class, "1");
-        System.out.println(wsResult);
+        String wsResult = weatherClient.findAll_JSON(String.class);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
