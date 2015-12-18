@@ -48,7 +48,6 @@
                         <ul class="nav navbar-nav" data-0="margin-top:20px;" data-300="margin-top:5px;">
                             <li><a href="index.html#index">Inicio</a></li>
                             <li><a href="index.html#section-about">Organización</a></li>
-                            <li><a href="index.html#line-pricing">Previsión meteorológica</a></li>
                             <li><a href="index.html#section-works">Entidades colaboradoras</a></li>
                             <li><a href="index.html#section-contact">Contacto</a></li>
                             <li class="active"><a href="#">Acceso a regantes</a></li>

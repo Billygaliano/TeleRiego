@@ -73,7 +73,7 @@
                                 <c:otherwise>
                                     <h3>Recomendación de riego</h3>
                                     <c:choose>
-                                        <c:when test="${needWater}">
+                                        <c:when test="${needIrrigate}">
                                             <p>Le recomendamos que riegue este terreno.</p>
                                             <form action="ServletLand" method="post" role="form">
                                                 <button type="submit" class="line-btn green">Regar</button>

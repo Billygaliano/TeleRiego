@@ -66,13 +66,13 @@ public class LandFacade extends AbstractFacade<Land> {
     }
     
     private boolean thereIsABitOfHumidity(BigInteger humidity){
-        if((BigInteger.valueOf(20).compareTo(humidity) < 0) && BigInteger.valueOf(60).compareTo(humidity) > 0)
+        if((BigInteger.valueOf(20).compareTo(humidity) < 0) && BigInteger.valueOf(50).compareTo(humidity) > 0)
             return true;
         return false;
     }
     
     private boolean thereIsEnoughtHumidity(BigInteger humidity){
-        if((BigInteger.valueOf(60).compareTo(humidity) < 0) && BigInteger.valueOf(80).compareTo(humidity) > 0)
+        if((BigInteger.valueOf(50).compareTo(humidity) < 0) && BigInteger.valueOf(80).compareTo(humidity) > 0)
             return true;
         return false;
     }
@@ -88,7 +88,7 @@ public class LandFacade extends AbstractFacade<Land> {
         int months = 0;
         
         long dif = 0;
-        dif = now.getTime() - lastDateIrrigation.getTime();
+        dif =  lastDateIrrigation.getTime() - now.getTime();
         months = (int) (dif / (1000 * 60 * 60 * 24 * 30));
         
         return months;
@@ -101,13 +101,13 @@ public class LandFacade extends AbstractFacade<Land> {
     }
     
     private float thereIsRain(JsonArray weatherPredictions){
-        float averageRain = 0;
+        float averageRain = 0, precipitations = 0, probability = 0;
         
         for (JsonObject wheaterPredictionPerDay : weatherPredictions.getValuesAs(JsonObject.class)) {
-            float precipitations = wheaterPredictionPerDay.getInt("precipitations");
-            int probability = wheaterPredictionPerDay.getInt("probability");
+            precipitations = wheaterPredictionPerDay.getInt("precipitations");
+            probability = (float) wheaterPredictionPerDay.getInt("probability");
             
-            averageRain = averageRain + (precipitations*(probability/100));
+            averageRain = averageRain + precipitations*(probability/100);
         }
         
         return averageRain;
@@ -117,6 +117,7 @@ public class LandFacade extends AbstractFacade<Land> {
         Land land = em.find(Land.class,landId);
         BigInteger quantityAvailable = land.getWMAvailable();
         BigInteger total = quantityAvailable.add(quantityWater);
+        
         land.setWMAvailable(total);
         em.persist(land);
     }
