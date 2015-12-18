@@ -8,6 +8,7 @@ package teleriego.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.util.Collection;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import teleriego.model.Membership;
+import teleriego.model.Transaction;
 import teleriego.viewbean.MembershipFacade;
 import teleriego.viewbean.TransactionFacade;
 
@@ -48,10 +50,11 @@ public class ServletDeniedTransaction extends HttpServlet {
         int nOrderInteger = Integer.parseInt(request.getParameter("norder"));
         BigDecimal nOrder = new BigDecimal(nOrderInteger);
         BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
-        System.out.println("Holaaaa");
         Membership membership = membershipFacade.getMembership(memberNumber);
         transactionFacade.deniedAdminTransaction(nOrder);
+        Collection<Transaction> transactions = transactionFacade.getTransactions();
         
+        request.setAttribute("transactions", transactions);
         request.setAttribute("membership", membership);
         request.setAttribute("adminTransaction", true);
         request.getRequestDispatcher("WEB-INF/Pages/AdminTransaction.jsp").forward(request, response);

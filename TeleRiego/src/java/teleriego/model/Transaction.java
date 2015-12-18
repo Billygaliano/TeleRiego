@@ -34,10 +34,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "TRANSACTION")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Transaction.findAll", query = "SELECT t FROM Transaction t"),
+    @NamedQuery(name = "Transaction.findAll", query = "SELECT t FROM Transaction t ORDER BY t.norder DESC"),
     @NamedQuery(name = "Transaction.findByNOrder", query = "SELECT t FROM Transaction t WHERE t.norder = :norder"),
     @NamedQuery(name = "Transaction.findByAmount", query = "SELECT t FROM Transaction t WHERE t.amount = :amount"),
     @NamedQuery(name = "Transaction.findByPrice", query = "SELECT t FROM Transaction t WHERE t.price = :price"),
+    @NamedQuery(name = "Transaction.findByMemberNumber", query = "SELECT t FROM Transaction t WHERE t.memberNumber = :memberNumber ORDER BY t.norder DESC"),
     @NamedQuery(name = "Transaction.findByDateOrder", query = "SELECT t FROM Transaction t WHERE t.dateOrder = :dateOrder"),
     @NamedQuery(name = "Transaction.findByStateOrder", query = "SELECT t FROM Transaction t WHERE t.stateOrder = :stateOrder")})
 public class Transaction implements Serializable {

@@ -76,5 +76,12 @@ public class TransactionFacade extends AbstractFacade<Transaction> {
         Collection<Transaction> transactions = query.getResultList();
         return transactions;
     }
+
+    public Collection<Transaction> getTransactionsByMember(BigDecimal memberNumber) {
+        Membership membership = em.find(Membership.class, memberNumber);
+        Query query = em.createNamedQuery("Transaction.findByMemberNumber",Transaction.class).setParameter("memberNumber", membership).setMaxResults(50);
+        Collection<Transaction> transactions = query.getResultList();
+        return transactions;
+    }
     
 }

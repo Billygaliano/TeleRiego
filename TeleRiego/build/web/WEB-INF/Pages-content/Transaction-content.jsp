@@ -16,7 +16,7 @@
                         
                         <div class="accordion">      
                             <c:set var="i" value="1"></c:set>
-                            <c:forEach var="transaction" items="${membership.transactionCollection}">
+                            <c:forEach var="transaction" items="${transactions}">
                                 <div class="accordion-section">
                                     <a class="accordion-section-title" href="#accordion-${i}">Pedido nº ${transaction.norder}</a>
                                     <div id="accordion-${i}" class="accordion-section-content">

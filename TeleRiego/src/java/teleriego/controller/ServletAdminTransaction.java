@@ -51,7 +51,7 @@ public class ServletAdminTransaction extends HttpServlet {
         Membership membership = membershipFacade.getMembership(memberNumber);
         Collection<Transaction> transactions = transactionFacade.getTransactions();
         
-        request.setAttribute("transaction", transactions);
+        request.setAttribute("transactions", transactions);
         request.setAttribute("membership", membership);
         request.setAttribute("adminTransaction", true);
         request.getRequestDispatcher("WEB-INF/Pages/AdminTransaction.jsp").forward(request, response);

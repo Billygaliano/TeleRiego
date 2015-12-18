@@ -8,6 +8,7 @@ package teleriego.controller;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Collection;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import teleriego.model.Membership;
+import teleriego.model.Transaction;
 import teleriego.viewbean.LandFacade;
 import teleriego.viewbean.MembershipFacade;
 import teleriego.viewbean.TransactionFacade;
@@ -59,7 +61,9 @@ public class ServletAcceptTransaction extends HttpServlet {
         Membership membership = membershipFacade.getMembership(memberNumber);
         transactionFacade.acceptAdminTransaction(nOrder);
         landFacade.updateAdminLand(landId,amountWater);
+        Collection<Transaction> transactions = transactionFacade.getTransactions();
         
+        request.setAttribute("transactions", transactions);
         request.setAttribute("membership", membership);
         request.setAttribute("adminTransaction", true);
         request.getRequestDispatcher("WEB-INF/Pages/AdminTransaction.jsp").forward(request, response);

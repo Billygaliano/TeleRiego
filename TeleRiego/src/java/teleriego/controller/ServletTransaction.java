@@ -7,6 +7,7 @@ package teleriego.controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Collection;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import teleriego.model.Membership;
+import teleriego.model.Transaction;
 import teleriego.viewbean.MembershipFacade;
 import teleriego.viewbean.TransactionFacade;
 
@@ -46,6 +48,9 @@ public class ServletTransaction extends HttpServlet {
         }
         BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
         Membership membership = membershipFacade.getMembership(memberNumber);
+        Collection<Transaction> transactions = transactionFacade.getTransactionsByMember(memberNumber);
+        
+        request.setAttribute("transactions", transactions);
         request.setAttribute("membership", membership);
         request.setAttribute("transaction", true);
         request.getRequestDispatcher("WEB-INF/Pages/Transaction.jsp").forward(request, response);

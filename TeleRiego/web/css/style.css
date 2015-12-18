@@ -675,6 +675,13 @@ button[type="submit"].green {
   border: none;
   color: #ffffff;
 }
+
+  .green-light{
+        background: #5fac46;
+        border: none;
+        color: #ffffff;
+  }
+  
 .line-btn.orange,
 input[type="submit"].orange,
 button[type="submit"].orange {

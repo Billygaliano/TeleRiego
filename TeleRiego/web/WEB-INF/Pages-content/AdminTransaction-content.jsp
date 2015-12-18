@@ -16,7 +16,7 @@
                         
                         <div class="accordion">      
                             <c:set var="i" value="1"></c:set>
-                            <c:forEach var="transaction" items="${transaction}">
+                            <c:forEach var="transaction" items="${transactions}">
                                 <div class="accordion-section">
                                     <a class="accordion-section-title" href="#accordion-${i}">Pedido nº ${transaction.norder}</a>
                                     <div id="accordion-${i}" class="accordion-section-content">
@@ -27,8 +27,8 @@
                                         <p>Fecha del pedido: <strong><fmt:formatDate type="date" value="${transaction.dateOrder}" /></strong></p>
                                         <p>Estado del pedido: <strong>${transaction.stateOrder}</strong></p>
                                         <c:if test="${transaction.stateOrder eq 'pendiente'}">
-                                            <a href="ServletAcceptTransaction?norder=${transaction.norder}&landId=${transaction.landId.landId}&amountWater=${transaction.amount}"><button  class="line-btn green">Aceptar</button></a>
-                                            <a href="ServletDeniedTransaction?norder=${transaction.norder}"><button  class="line-btn green">Denegar</button></a>
+                                            <a href="ServletAcceptTransaction?norder=${transaction.norder}&landId=${transaction.landId.landId}&amountWater=${transaction.amount}"><button  class="line-btn green-light">Aceptar</button></a>
+                                            <a href="ServletDeniedTransaction?norder=${transaction.norder}"><button  class="line-btn red">Denegar</button></a>
                                         </c:if>
                                     </div><!--end .accordion-section-content-->
                                 </div><!--end .accordion-section--> 

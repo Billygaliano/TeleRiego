@@ -2672,6 +2672,8 @@ select[multiple].input-lg {
     width: auto;
     vertical-align: middle;
   }
+
+  
   .form-inline .input-group {
     display: inline-table;
     vertical-align: middle;
