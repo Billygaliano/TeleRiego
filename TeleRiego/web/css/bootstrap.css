@@ -963,6 +963,8 @@ img {
 }
 .img-rounded {
   border-radius: 6px;
+  vertical-align: middle;
+  width: 200px;
 }
 .img-thumbnail {
   display: inline-block;
@@ -980,6 +982,8 @@ img {
 }
 .img-circle {
   border-radius: 50%;
+  vertical-align: middle;
+  
 }
 hr {
   margin-top: 20px;
