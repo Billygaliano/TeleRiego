@@ -55,7 +55,7 @@
                 <div class="land-details">
                     <h3>Agua disponible para regar</h3>
                     <p id="humedad">Agua disponible para regar: <strong>${specificLand.WMAvailable}m<sup>3</sup></strong></p>
-                    <form action="ServletBuyWater" method="post" role="form">
+                    <form action="ServletBuyWater?landId=${specificLand.landId}" method="post" role="form">
                         <button type="submit" class="line-btn green">Comprar agua</button>
                     </form>
                 </div>

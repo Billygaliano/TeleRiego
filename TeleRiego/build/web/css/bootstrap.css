@@ -188,6 +188,12 @@ table {
     font-weight: bold;
 }
 
+.verificateWater{
+    margin-top: 20px;
+    font-weight: bold; 
+    font-size: 20px;
+}
+
 .land-details{
     margin-bottom: 21px;
 }
