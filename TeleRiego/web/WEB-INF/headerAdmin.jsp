@@ -17,6 +17,12 @@
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav" data-0="margin-top:20px;" data-300="margin-top:5px;">
+                            <li id="photo">  
+                                <div><a href="ServletAdminProfile">
+                                         <img alt="profile" src="ServletImage?id=${sessionScope.memberNumber}" width="50px" style="height: 100%; border-radius: 25px"/>
+                                      </a>
+                                </div>
+                            </li>                            
                             <li><a href="ServletAdminProfile">${membership.userName}</a></li>
                             <li><a href="ServletAdminTransaction">Transacciones</a></li>
                             <li><a href="ServletLogOut">Cerrar Sesión</a></li>

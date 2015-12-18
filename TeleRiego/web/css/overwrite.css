@@ -249,3 +249,8 @@ a.btn,.btn:focus {
 }
 
 
+.profilephoto{
+    width: 150px;
+    height: 100%; 
+    border-radius: 25px;
+}

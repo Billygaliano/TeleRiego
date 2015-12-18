@@ -13,7 +13,25 @@
                 <section id="perf" class="section appear clearfix">
                     <div class="container">  
                         <div class="align-center"><h2>Mi perfil</h2><br> </div>
-                        <div class="row mar-bot40 col-md-6" role="group" style="margin-top: 0px"> 
+                        <div class="row mar-bot40 col-md-3" role="group" style="margin-top: 0px">
+                            <p id="photo" >
+                              <img class="profilephoto" alt="profile" src="ServletImage?id=${sessionScope.memberNumber}" height="100px" width="100px"/>
+                            </p>
+                            <a href="ServletUploadImage"><button type="button" id="uploadimage" class="line-btn green">Cambiar/Subir Foto</button></a>
+                            <c:if test="${param.uploadimage}">
+                                <form action="ServletChangeImage" method="POST" enctype="multipart/form-data">
+                                    <input type="file" name="image">
+                                    <input type="submit" value="Subir">
+                                </form>
+                                <c:if test="${param.baduploadimage}">
+                                    <div id="baduploadimage" class="error">
+                                        Imagen no válida
+                                    </div>
+                                </c:if>
+                            </c:if>
+                            
+                        </div>                        
+                        <div class="row mar-bot40 col-md-3" role="group" style="margin-top: 0px"> 
                             <p>Número de usuario: <strong>${membership.memberNumber}</strong></p>
                             <p>DNI: <strong>${membership.dni}</strong></p>
                             <p>Nombre y apellidos: <strong>${membership.userName} ${membership.surname}</strong></p>
