@@ -13,7 +13,7 @@
                 <section id="perf" class="section appear clearfix">
                     <div class="container">  
                         <div class="align-center"><h2>Mi perfil</h2><br> </div>
-                        <div class="row mar-bot40 col-md-3" role="group" style="margin-top: 0px">
+                        <div class="row mar-bot40 col-md-2" role="group" style="margin-top: 0px">
                             <p id="photo" >
                               <img class="img-rounded" alt="profile" src="ServletImage?id=${sessionScope.memberNumber}"  width="70%"/>
                             </p>
@@ -31,7 +31,7 @@
                             </c:if>
                             
                         </div>                        
-                        <div class="row mar-bot40 col-md-3" role="group" style="margin-top: 0px"> 
+                        <div class="row mar-bot40 col-md-offset-1 col-md-3" role="group" style="margin-top: 0px"> 
                             <p>Número de usuario: <strong>${membership.memberNumber}</strong></p>
                             <p>DNI: <strong>${membership.dni}</strong></p>
                             <p>Nombre y apellidos: <strong>${membership.userName} ${membership.surname}</strong></p>
