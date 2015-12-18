@@ -979,9 +979,7 @@ section.featured.inner {
 	padding: 150px 0 50px;
 }
   /*id*/
-#header img {
-height: 600px;
-}
+#header img {height: 50px;width: 50px;float: right;margin-right: 10px;}
 #section-services {
 background-color: #fff;
  height: 650px;

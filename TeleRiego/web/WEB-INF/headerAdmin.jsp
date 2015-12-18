@@ -19,7 +19,7 @@
                         <ul class="nav navbar-nav" data-0="margin-top:20px;" data-300="margin-top:5px;">
                             <li id="photo">  
                                 <div><a href="ServletAdminProfile">
-                                         <img alt="profile" src="ServletImage?id=${sessionScope.memberNumber}" width="50px" style="height: 100%; border-radius: 25px"/>
+                                        <img class="img-circle" alt="profile" src="ServletImage?id=${sessionScope.memberNumber}" height="10%"width="10%" />
                                       </a>
                                 </div>
                             </li>                            
