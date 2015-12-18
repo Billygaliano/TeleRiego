@@ -44,7 +44,17 @@ public class ServletConfirmChangePass extends HttpServlet {
         Boolean correctUpate = membershipFacade.changePassword(oldPass, newPass, memberNumber);
         Membership membership = membershipFacade.getMembership(memberNumber);
         request.setAttribute("membership", membership);
-        if(correctUpate==true){
+        
+        if(membership.getRole().equalsIgnoreCase("administrador") && correctUpate == true){
+                request.setAttribute("correctUpdate", correctUpate);
+                request.getRequestDispatcher("WEB-INF/Pages/ProfileAdmin.jsp?changepass=true").forward(request, response);
+                return;
+        }else if(membership.getRole().equalsIgnoreCase("administrador") && correctUpate == false){
+            request.setAttribute("incorrectUpdate", true);
+            request.getRequestDispatcher("WEB-INF/Pages/ProfileAdmin.jsp?changepass=true").forward(request, response);
+                return;
+            }
+        else if(correctUpate==true){
             request.setAttribute("correctUpdate", correctUpate);
             request.getRequestDispatcher("WEB-INF/Pages/Profile.jsp?changepass=true").forward(request, response);
         }

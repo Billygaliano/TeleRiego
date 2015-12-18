@@ -42,9 +42,17 @@ public class ServletChangePass extends HttpServlet {
             request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
             return;
         }
+        
         BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
         Membership membership = membershipFacade.getMembership(memberNumber);
         request.setAttribute("membership", membership);
+        
+        if(membership.getRole().equalsIgnoreCase("administrador")){
+                request.getRequestDispatcher("WEB-INF/Pages/ProfileAdmin.jsp?changepass=true").forward(request, response);
+                return;
+        }
+
+
         request.getRequestDispatcher("WEB-INF/Pages/Profile.jsp?changepass=true").forward(request, response);   
     }
 

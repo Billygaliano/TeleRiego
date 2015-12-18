@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Membership implements Serializable {
     @Lob
     @Column(name = "IMAGE")
-    private Serializable image;
+    private byte[] image;
     @Size(max = 20)
     @Column(name = "ROLE")
     private String role;
@@ -219,11 +219,11 @@ public class Membership implements Serializable {
         return "teleriego.model.Membership[ memberNumber=" + memberNumber + " ]";
     }
 
-    public Serializable getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(Serializable image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
