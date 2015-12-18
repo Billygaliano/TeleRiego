@@ -37,7 +37,10 @@ public class ServletLogin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {       
-        if(request.getSession().getAttribute("membership")!=null){
+        if(request.getSession().getAttribute("memberNumber")!=null){
+            BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
+            Membership membership = membershipFacade.getMembership(memberNumber);
+            request.setAttribute("membership", membership);
             request.setAttribute("profile", true);
             request.getRequestDispatcher("WEB-INF/Pages/Profile.jsp").forward(request, response);
             return;

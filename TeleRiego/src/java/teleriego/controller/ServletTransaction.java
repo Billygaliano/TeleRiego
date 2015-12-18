@@ -48,7 +48,6 @@ public class ServletTransaction extends HttpServlet {
         }
         BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
         Membership membership = membershipFacade.getMembership(memberNumber);
-        System.out.println("Colection: "+membership.getTransactionCollection());
         request.setAttribute("membership", membership);
         request.setAttribute("transaction", true);
         request.getRequestDispatcher("WEB-INF/Pages/Transaction.jsp").forward(request, response);

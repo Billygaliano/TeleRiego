@@ -6,11 +6,15 @@
 package teleriego.controller;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import teleriego.model.Membership;
+import teleriego.viewbean.MembershipFacade;
 
 /**
  *
@@ -18,6 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ServletProfile", urlPatterns = {"/ServletProfile"})
 public class ServletProfile extends HttpServlet {
+    @EJB
+    private MembershipFacade membershipFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,6 +42,9 @@ public class ServletProfile extends HttpServlet {
             return;
         }
         
+        BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
+        Membership membership = membershipFacade.getMembership(memberNumber);
+        request.setAttribute("membership", membership);
         request.setAttribute("profile", true);
         request.getRequestDispatcher("WEB-INF/Pages/Profile.jsp").forward(request, response);
         
