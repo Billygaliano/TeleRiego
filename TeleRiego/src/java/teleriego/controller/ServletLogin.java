@@ -44,7 +44,7 @@ public class ServletLogin extends HttpServlet {
             request.setAttribute("membership", membership);
             request.setAttribute("profile", true);
             if(membership.getRole().equalsIgnoreCase("administrador")){
-                request.getRequestDispatcher("WEB-INF/Pages/AdminTrans.jsp").forward(request, response);
+                request.getRequestDispatcher("WEB-INF/Pages/ProfileAdmin.jsp").forward(request, response);
                 return;
             }
             request.getRequestDispatcher("WEB-INF/Pages/Profile.jsp").forward(request, response);
