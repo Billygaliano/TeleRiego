@@ -7,6 +7,7 @@ package teleriego.controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import teleriego.model.Membership;
+import teleriego.viewbean.LandFacade;
 import teleriego.viewbean.MembershipFacade;
 import teleriego.viewbean.TransactionFacade;
 
@@ -21,8 +23,10 @@ import teleriego.viewbean.TransactionFacade;
  *
  * @author inftel11
  */
-@WebServlet(name = "ServletTransaction", urlPatterns = {"/ServletTransaction"})
-public class ServletTransaction extends HttpServlet {
+@WebServlet(name = "ServletAcceptTransaction", urlPatterns = {"/ServletAcceptTransaction"})
+public class ServletAcceptTransaction extends HttpServlet {
+    @EJB
+    private LandFacade landFacade;
     @EJB
     private TransactionFacade transactionFacade;
     @EJB
@@ -44,12 +48,21 @@ public class ServletTransaction extends HttpServlet {
             request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
             return;
         }
+       
+        int landIdInteger = Integer.parseInt(request.getParameter("landId"));
+        BigDecimal landId = new BigDecimal(landIdInteger);
+        int nOrderInteger = Integer.parseInt(request.getParameter("norder"));
+        BigDecimal nOrder = new BigDecimal(nOrderInteger);
+        int amountWaterInteger = Integer.parseInt(request.getParameter("amountWater"));
+        BigInteger amountWater = new BigInteger(String.valueOf(amountWaterInteger));
         BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
         Membership membership = membershipFacade.getMembership(memberNumber);
-        request.setAttribute("membership", membership);
-        request.setAttribute("transaction", true);
-        request.getRequestDispatcher("WEB-INF/Pages/Transaction.jsp").forward(request, response);
+        transactionFacade.acceptAdminTransaction(nOrder);
+        landFacade.updateAdminLand(landId,amountWater);
         
+        request.setAttribute("membership", membership);
+        request.setAttribute("adminTransaction", true);
+        request.getRequestDispatcher("WEB-INF/Pages/adminTransaction.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

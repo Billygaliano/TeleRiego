@@ -6,6 +6,7 @@
 package teleriego.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -19,14 +20,14 @@ import teleriego.viewbean.TransactionFacade;
 
 /**
  *
- * @author inftel11
+ * @author inftel10
  */
-@WebServlet(name = "ServletTransaction", urlPatterns = {"/ServletTransaction"})
-public class ServletTransaction extends HttpServlet {
-    @EJB
-    private TransactionFacade transactionFacade;
+@WebServlet(name = "ServletDeniedTransaction", urlPatterns = {"/ServletDeniedTransaction"})
+public class ServletDeniedTransaction extends HttpServlet {
     @EJB
     private MembershipFacade membershipFacade;
+    @EJB
+    private TransactionFacade transactionFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,12 +45,16 @@ public class ServletTransaction extends HttpServlet {
             request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
             return;
         }
+        
+        int nOrderInteger = Integer.parseInt(request.getParameter("norder"));
+        BigDecimal nOrder = new BigDecimal(nOrderInteger);
         BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
         Membership membership = membershipFacade.getMembership(memberNumber);
-        request.setAttribute("membership", membership);
-        request.setAttribute("transaction", true);
-        request.getRequestDispatcher("WEB-INF/Pages/Transaction.jsp").forward(request, response);
+        transactionFacade.deniedAdminTransaction(nOrder);
         
+        request.setAttribute("membership", membership);
+        request.setAttribute("adminTransaction", true);
+        request.getRequestDispatcher("WEB-INF/Pages/adminTransaction.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

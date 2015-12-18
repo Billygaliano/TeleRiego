@@ -15,6 +15,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -42,6 +43,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Membership.findByAddress", query = "SELECT m FROM Membership m WHERE m.address = :address"),
     @NamedQuery(name = "Membership.findByPassword", query = "SELECT m FROM Membership m WHERE m.password = :password")})
 public class Membership implements Serializable {
+    @Lob
+    @Column(name = "IMAGE")
+    private Serializable image;
+    @Size(max = 20)
+    @Column(name = "ROLE")
+    private String role;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -210,6 +217,22 @@ public class Membership implements Serializable {
     @Override
     public String toString() {
         return "teleriego.model.Membership[ memberNumber=" + memberNumber + " ]";
+    }
+
+    public Serializable getImage() {
+        return image;
+    }
+
+    public void setImage(Serializable image) {
+        this.image = image;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
     
 }

@@ -113,4 +113,12 @@ public class LandFacade extends AbstractFacade<Land> {
         return averageRain;
     }
     
+    public void updateAdminLand(BigDecimal landId,BigInteger quantityWater){
+        Land land = em.find(Land.class,landId);
+        BigInteger quantityAvailable = land.getWMAvailable();
+        BigInteger total = quantityAvailable.add(quantityWater);
+        land.setWMAvailable(total);
+        em.persist(land);
+    }
+    
 }

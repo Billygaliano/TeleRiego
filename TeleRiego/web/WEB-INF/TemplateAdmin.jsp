@@ -1,8 +1,9 @@
 <%-- 
-    Document   : Template
-    Created on : 16-dic-2015, 22:47:56
-    Author     : aitorpagan
+    Document   : TemplateAdmin
+    Created on : 18-dic-2015, 11:01:16
+    Author     : inftel10
 --%>
+
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -31,11 +32,12 @@
     </head>
 	 
     <body>
-            <jsp:include page="/WEB-INF/header.jsp"></jsp:include>
-  
-            <jsp:include page="/WEB-INF/Pages-content/${param.content}.jsp"></jsp:include>
         
-            <jsp:include page="/WEB-INF/footer.jsp"></jsp:include>
+        <jsp:include page="/WEB-INF/headerAdmin.jsp"></jsp:include>
+  
+        <jsp:include page="/WEB-INF/Pages-content/${param.content}.jsp"></jsp:include>
+        
+        <jsp:include page="/WEB-INF/footer.jsp"></jsp:include>
 
                 	
 
@@ -58,38 +60,7 @@
 	<script src="js/grid.js"></script>
         <script src="js/main.js"></script>
         <script type="text/javascript" src="js/accordion.js"></script>
-            
-        <c:if test="${land}">
-            <script type="text/javascript">
-                google.maps.event.addDomListener(window, 'load', init);
-
-                function init() {
-                    // Basic options for a simple Google Map
-                    // For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
-                    var mapOptions = {
-                        // How zoomed in you want the map to start at (always required)
-                        zoom: 15,
-
-                        // The latitude and longitude to center the map (always required)
-                        center: new google.maps.LatLng(${specificLand.longitude}, ${specificLand.latitude}), // New York //parametro de localizacion
-                        //shape: 
-                        //mapMaker: true, 
-
-                        // How you would like to style the map. 
-                        // This is where you would paste any style found on Snazzy Maps.
-                        //styles: [	{		featureType:"all",		elementType:"all",		stylers:[		{			invert_lightness:true		},		{			saturation:10		},		{			lightness:30		},		{			gamma:0.5		},		{			hue:"#1C705B"		}		]	}	]
-                    };       
-                    
-                    // Get the HTML DOM element that will contain your map 
-                    // We are using a div with id="map" seen below in the <body>
-                    var mapElement = document.getElementById('map');
-
-                    // Create the Google Map using out element and options defined above
-                    var map = new google.maps.Map(mapElement, mapOptions);
-                }
-            </script>
-        </c:if>
-		 <script src="js/wow.min.js"></script>
+        <script src="js/wow.min.js"></script>
 	 <script>
 	 wow = new WOW(
 	 {

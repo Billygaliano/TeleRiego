@@ -57,4 +57,16 @@ public class TransactionFacade extends AbstractFacade<Transaction> {
         }
     }
     
+    public void acceptAdminTransaction(BigDecimal norder){
+        Transaction transaction = em.find(Transaction.class,norder);
+        transaction.setStateOrder("pagado");
+        em.persist(transaction);
+    }
+    
+    public void deniedAdminTransaction(BigDecimal norder){
+        Transaction transaction = em.find(Transaction.class,norder);
+        transaction.setStateOrder("rechazado");
+        em.persist(transaction);
+    }
+    
 }

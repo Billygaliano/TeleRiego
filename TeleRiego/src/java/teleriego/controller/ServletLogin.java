@@ -36,12 +36,17 @@ public class ServletLogin extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {       
+            throws ServletException, IOException {
+        
         if(request.getSession().getAttribute("memberNumber")!=null){
             BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
             Membership membership = membershipFacade.getMembership(memberNumber);
             request.setAttribute("membership", membership);
             request.setAttribute("profile", true);
+            if(membership.getRole().equalsIgnoreCase("administrador")){
+                request.getRequestDispatcher("WEB-INF/Pages/AdminTrans.jsp").forward(request, response);
+                return;
+            }
             request.getRequestDispatcher("WEB-INF/Pages/Profile.jsp").forward(request, response);
             return;
         }
@@ -65,6 +70,8 @@ public class ServletLogin extends HttpServlet {
             request.getRequestDispatcher("WEB-INF/Pages/Login.jsp?errorPassword=true").forward(request, response);
             return;
         }
+        
+        
         
         request.getSession().setAttribute("memberNumber", memberNumber);
         Membership membership = membershipFacade.getMembership(memberNumber);
