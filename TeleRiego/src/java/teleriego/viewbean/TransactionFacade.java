@@ -5,9 +5,15 @@
  */
 package teleriego.viewbean;
 
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import teleriego.model.Land;
+import teleriego.model.Membership;
 import teleriego.model.Transaction;
 
 /**
@@ -26,6 +32,29 @@ public class TransactionFacade extends AbstractFacade<Transaction> {
 
     public TransactionFacade() {
         super(Transaction.class);
+    }
+    
+    public void setTransaction(BigDecimal landId,BigDecimal memberNumber,double amount) {
+
+        Membership membership = em.find(Membership.class,memberNumber);
+        Land land = em.find(Land.class, landId);
+        Date date = new Date();
+        Transaction transaction = new Transaction();
+        double price = 0.22;
+        try {
+           
+            double total = amount*price; 
+            
+            transaction.setMemberNumber(membership);
+            transaction.setAmount(amount);
+            transaction.setLandId(land);
+            transaction.setDateOrder(date);
+            transaction.setStateOrder("pendiente");
+            transaction.setPrice(total);
+            em.persist(transaction);
+        } catch (Exception ex) {
+            Logger.getLogger(MembershipFacade.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

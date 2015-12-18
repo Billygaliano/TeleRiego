@@ -22,16 +22,16 @@
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">
                             <div class="cform" id="contact-form">
-                                <form action="ServletLogin" method="post" role="form" class="ServletLogin">
+                                <form action="ServletConfirmBuyWater?landId=${specificLand.landId}" method="post" role="form" class="ServletLogin">
                                     <div class="wow bounceIn">
                                         <div class="form-group">
-                                            <label for="name">Nº de socio</label> 
+                                            <label for="name">Nº de socio: ${membership.memberNumber}</label> 
                                         </div>
                                         <div class="form-group">
-                                            <label for="name">Nombre de usuario</label> 
+                                            <label for="name">Nombre de usuario: ${membership.userName} ${membership.surname}</label> 
                                         </div>
                                         <div class="form-group">
-                                            <label for="name">Nombre del terreno</label> 
+                                            <label for="name">Nombre del terreno: ${specificLand.nameland}</label> 
                                         </div>
                                         <div class="form-group">
                                             <label for="name">Precio del litro del agua: </label> <strong> 0.22 €/l</strong>
@@ -39,13 +39,14 @@
                                         
                                         <div class="form-group">
                                             <label for="email">Cantidad:</label>
-                                            <input type="text" class="form-control" name="cantidad" id="cantidad" placeholder="cantidad" data-rule="required" data-msg="Por favor, introduzca una cantidad" />
+                                            <input type="text" class="form-control" name="quantity" id="quantity"  data-rule="required" data-msg="Por favor, introduzca una cantidad" />
                                             <div class="validation"></div>
                                         </div>
-                                    <button type="submit" class="line-btn green">Acceder</button>
+                                    <button type="submit" class="line-btn green">Comprar</button>
                                 </form>
-                                    <c:if test="${param.errorPassword}">
-                                        <p class="error">Usuario o contraseña incorrectos</p>
+                                    <c:if test="${param.confirmedBuyWater}">
+                                        <p class="verificate">La compra ha sido realizada.</p>
+                                        <p class="verificateWater">Realice un ingreso en la cuenta 0000 2222 82 3456789990 en un plazo de 48 horas.</p>
                                     </c:if>
                             </div>
                         </div>

@@ -44,7 +44,7 @@ public class Transaction implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
-    @SequenceGenerator(name = "idGenerator", allocationSize = 6, sequenceName = "TRANSACTION_SEQUENCE")
+    @SequenceGenerator(name = "idGenerator", allocationSize = 1, sequenceName = "TRANSACTION_SEQUENCE")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idGenerator")
     @Basic(optional = false)
     @NotNull

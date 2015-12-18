@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import teleriego.model.Membership;
 import teleriego.viewbean.MembershipFacade;
 
 /**
@@ -41,6 +42,8 @@ public class ServletConfirmChangePass extends HttpServlet {
      
         BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
         Boolean correctUpate = membershipFacade.changePassword(oldPass, newPass, memberNumber);
+        Membership membership = membershipFacade.getMembership(memberNumber);
+        request.setAttribute("membership", membership);
         if(correctUpate==true){
             request.setAttribute("correctUpdate", correctUpate);
             request.getRequestDispatcher("WEB-INF/Pages/Profile.jsp?changepass=true").forward(request, response);

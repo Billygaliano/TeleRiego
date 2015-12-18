@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import teleriego.model.Land;
+import teleriego.model.Membership;
 import teleriego.viewbean.LandFacade;
+import teleriego.viewbean.MembershipFacade;
 
 /**
  *
@@ -22,6 +24,8 @@ import teleriego.viewbean.LandFacade;
  */
 @WebServlet(name = "ServletBuyWater", urlPatterns = {"/ServletBuyWater"})
 public class ServletBuyWater extends HttpServlet {
+    @EJB
+    private MembershipFacade membershipFacade;
     @EJB
     private LandFacade landFacade;
 
@@ -37,15 +41,19 @@ public class ServletBuyWater extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-//        if(request.getSession().getAttribute("memberNumber")==null){
-//            request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
-//            return;
-//        }
+        if(request.getSession().getAttribute("memberNumber")==null){
+            request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
+            return;
+        }
         
-//        int lnadIdInteger = Integer.parseInt(request.getParameter("landid"));
-//        BigDecimal landId = new BigDecimal(lnadIdInteger);
-//        Land specificLand = landFacade.getLand(landId);
-        
+        int landIdInteger = Integer.parseInt(request.getParameter("landId"));
+        System.out.println(landIdInteger);
+        BigDecimal landId = new BigDecimal(landIdInteger);
+        Land specificLand = landFacade.getLand(landId);
+        request.setAttribute("specificLand", specificLand);
+        BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
+        Membership membership = membershipFacade.getMembership(memberNumber);
+        request.setAttribute("membership", membership);
         request.getRequestDispatcher("WEB-INF/Pages/BuyWater.jsp").forward(request, response);
     }
 
