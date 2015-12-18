@@ -47,9 +47,9 @@
                     </table>
                 </div>
                 <div class="land-details">
-                    <h3>Detalles del terreno</h3>
-                    <p id="area">Área del terreno: <strong>${specificLand.squareMeters} m<sup>2</sup></strong></p>
-                    <p id="humedad">Humedad del terreno: <strong>${specificLand.humidity}%</strong></p>
+                    <h3>Características del terreno</h3>
+                    <p id="area">Superficie: <strong>${specificLand.squareMeters} m<sup>2</sup></strong></p>
+                    <p id="humedad">Humedad de la tierra: <strong>${specificLand.humidity}%</strong></p>
                     <p id="fechariego">Fecha del último riego: <strong><fmt:formatDate type="date" value="${specificLand.lastDateIrrigation}" /></strong></p>
                 </div>
                 <div class="land-details">
@@ -59,34 +59,40 @@
                         <button type="submit" class="line-btn green">Comprar agua</button>
                     </form>
                 </div>
-                <div class="land-details">
-                    <c:choose>
-                        <c:when test="${specificLand.state eq 'regando'}">
-                            <h3>Estado del riego</h3>
-                            <span>Regando...</span>
-                            <form action="ServletLand" method="post" role="form">
-                                <button type="submit" class="line-btn green">Dejar de regar</button>
-                            </form>
-                        </c:when>
-                        <c:otherwise>
-                            <h3>Recomendación de riego</h3>
+                <c:choose>
+                    <c:when test="${specificLand.WMAvailable ne 0}">
+                        <div class="land-details">
                             <c:choose>
-                                <c:when test="${needWater}">
-                                    <p>Le recomendamos que riegue este terreno.</p>
+                                <c:when test="${specificLand.state eq 'regando'}">
+                                    <h3>Estado del riego</h3>
+                                    <span>Regando...</span>
                                     <form action="ServletLand" method="post" role="form">
-                                        <button type="submit" class="line-btn green">Regar</button>
+                                        <button type="submit" class="line-btn green">Dejar de regar</button>
                                     </form>
                                 </c:when>
                                 <c:otherwise>
-                                    <p>Este terreno no necesita regarse.</p>
-                                    <form action="ServletLand" method="post" role="form">
-                                        <button type="submit" class="line-btn green">Regar</button>
-                                    </form>
+                                    <h3>Recomendación de riego</h3>
+                                    <c:choose>
+                                        <c:when test="${needWater}">
+                                            <p>Le recomendamos que riegue este terreno.</p>
+                                            <form action="ServletLand" method="post" role="form">
+                                                <button type="submit" class="line-btn green">Regar</button>
+                                            </form>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <p>Este terreno no necesita regarse.</p>
+                                            <form action="ServletLand" method="post" role="form">
+                                                <button type="submit" class="line-btn green">Regar</button>
+                                            </form>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:otherwise>
                             </c:choose>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                    </c:otherwise>
+                </c:choose>
             </div>
             <div class="row mar-bot40 col-sm-6" role="group" style="margin-top: 0px">
                 <p id="map">Información sobre la localización MAPA</p>

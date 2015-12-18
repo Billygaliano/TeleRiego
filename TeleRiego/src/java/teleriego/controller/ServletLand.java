@@ -57,13 +57,16 @@ public class ServletLand extends HttpServlet {
         Land specificLand = landFacade.getLand(landId);
         
         WeatherClient weatherClient = new WeatherClient();
-        JsonArray wsResult = weatherClient.findAll_JSON(JsonArray.class); 
+        JsonArray wsResult = weatherClient.findAll_JSON(JsonArray.class);
+        
+        Boolean needIrrigate = landFacade.suggestIrrigation(specificLand.getHumidity(), specificLand.getLastDateIrrigation(), specificLand.getWMAvailable(), wsResult);
         
         BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
         Membership membership = membershipFacade.getMembership(memberNumber);
-        request.setAttribute("weatherPrediction", wsResult);
         request.setAttribute("membership", membership);
         request.setAttribute("specificLand", specificLand);
+        request.setAttribute("weatherPrediction", wsResult);
+        request.setAttribute("needIrrigate", needIrrigate);
         request.setAttribute("land", true);
         request.getRequestDispatcher("WEB-INF/Pages/Land.jsp").forward(request, response);
         
