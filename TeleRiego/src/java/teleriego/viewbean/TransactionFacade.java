@@ -6,12 +6,14 @@
 package teleriego.viewbean;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import teleriego.model.Land;
 import teleriego.model.Membership;
 import teleriego.model.Transaction;
@@ -67,6 +69,12 @@ public class TransactionFacade extends AbstractFacade<Transaction> {
         Transaction transaction = em.find(Transaction.class,norder);
         transaction.setStateOrder("rechazado");
         em.persist(transaction);
+    }
+    
+    public Collection<Transaction> getTransactions(){
+        Query query = em.createNamedQuery("Transaction.findAll",Transaction.class);
+        Collection<Transaction> transactions = query.getResultList();
+        return transactions;
     }
     
 }

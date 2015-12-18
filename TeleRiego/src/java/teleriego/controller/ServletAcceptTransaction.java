@@ -53,8 +53,8 @@ public class ServletAcceptTransaction extends HttpServlet {
         BigDecimal landId = new BigDecimal(landIdInteger);
         int nOrderInteger = Integer.parseInt(request.getParameter("norder"));
         BigDecimal nOrder = new BigDecimal(nOrderInteger);
-        int amountWaterInteger = Integer.parseInt(request.getParameter("amountWater"));
-        BigInteger amountWater = new BigInteger(String.valueOf(amountWaterInteger));
+        double amountWaterInteger = Double.parseDouble(request.getParameter("amountWater"));
+        BigInteger amountWater = new BigDecimal(amountWaterInteger).toBigInteger();
         BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
         Membership membership = membershipFacade.getMembership(memberNumber);
         transactionFacade.acceptAdminTransaction(nOrder);
@@ -62,7 +62,7 @@ public class ServletAcceptTransaction extends HttpServlet {
         
         request.setAttribute("membership", membership);
         request.setAttribute("adminTransaction", true);
-        request.getRequestDispatcher("WEB-INF/Pages/adminTransaction.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/Pages/AdminTransaction.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

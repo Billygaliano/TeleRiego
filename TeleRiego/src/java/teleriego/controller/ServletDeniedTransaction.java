@@ -40,7 +40,6 @@ public class ServletDeniedTransaction extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         if(request.getSession().getAttribute("memberNumber")==null){
             request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
             return;
@@ -49,12 +48,13 @@ public class ServletDeniedTransaction extends HttpServlet {
         int nOrderInteger = Integer.parseInt(request.getParameter("norder"));
         BigDecimal nOrder = new BigDecimal(nOrderInteger);
         BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
+        System.out.println("Holaaaa");
         Membership membership = membershipFacade.getMembership(memberNumber);
         transactionFacade.deniedAdminTransaction(nOrder);
         
         request.setAttribute("membership", membership);
         request.setAttribute("adminTransaction", true);
-        request.getRequestDispatcher("WEB-INF/Pages/adminTransaction.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/Pages/AdminTransaction.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

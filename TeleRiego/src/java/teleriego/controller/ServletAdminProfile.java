@@ -6,6 +6,7 @@
 package teleriego.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -16,13 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 import teleriego.model.Membership;
 import teleriego.viewbean.MembershipFacade;
 
-
 /**
  *
- * @author inftel12
+ * @author inftel10
  */
-@WebServlet(name = "ServletLogin", urlPatterns = {"/ServletLogin"})
-public class ServletLogin extends HttpServlet {
+@WebServlet(name = "ServletAdminProfile", urlPatterns = {"/ServletAdminProfile"})
+public class ServletAdminProfile extends HttpServlet {
     @EJB
     private MembershipFacade membershipFacade;
 
@@ -38,49 +38,16 @@ public class ServletLogin extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        if(request.getSession().getAttribute("memberNumber")!=null){
-            BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
-            Membership membership = membershipFacade.getMembership(memberNumber);
-            request.setAttribute("membership", membership);
-            request.setAttribute("profile", true);
-            if(membership.getRole().equalsIgnoreCase("administrador")){
-                request.getRequestDispatcher("WEB-INF/Pages/AdminTrans.jsp").forward(request, response);
-                return;
-            }
-            request.getRequestDispatcher("WEB-INF/Pages/Profile.jsp").forward(request, response);
-            return;
-        }
-
-        if(request.getParameter("memberNumber")==null || request.getParameter("password")==null){
+        if(request.getSession().getAttribute("memberNumber")==null){
             request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
             return;
         }
         
-        int memberNumberInteger = Integer.parseInt(request.getParameter("memberNumber"));
-        BigDecimal memberNumber = new BigDecimal(memberNumberInteger);
-        boolean testing = membershipFacade.testingMemberUser(memberNumber);
-        if(!testing){
-            request.getRequestDispatcher("WEB-INF/Pages/Login.jsp?errorPassword=true").forward(request, response);
-            return;
-        }
-        
-        String password = request.getParameter("password"); 
-        boolean passwordAutenticated = membershipFacade.autentication(memberNumber, password);
-        if(!passwordAutenticated){
-            request.getRequestDispatcher("WEB-INF/Pages/Login.jsp?errorPassword=true").forward(request, response);
-            return;
-        }
-
-        
-        request.getSession().setAttribute("memberNumber", memberNumber);
+        BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
         Membership membership = membershipFacade.getMembership(memberNumber);
         request.setAttribute("membership", membership);
-        request.setAttribute("profile", true);
-        if(membership.getRole().equalsIgnoreCase("administrador")){
-            request.getRequestDispatcher("WEB-INF/Pages/ProfileAdmin.jsp").forward(request, response);
-            return;
-        }
-        request.getRequestDispatcher("WEB-INF/Pages/Profile.jsp").forward(request, response);
+        request.setAttribute("adminTransaction", true);
+        request.getRequestDispatcher("WEB-INF/Pages/ProfileAdmin.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

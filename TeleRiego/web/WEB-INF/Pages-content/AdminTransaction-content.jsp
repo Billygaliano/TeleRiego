@@ -20,14 +20,16 @@
                                 <div class="accordion-section">
                                     <a class="accordion-section-title" href="#accordion-${i}">Pedido nº ${transaction.norder}</a>
                                     <div id="accordion-${i}" class="accordion-section-content">
-                                        <p>Número de socio: <strong>${transaction.memberNumber}</strong></p>
+                                        <p>Número de socio: <strong>${transaction.memberNumber.memberNumber}</strong></p>
                                         <p>Compra de agua para: <strong>${transaction.landId.nameland}</strong></p>
                                         <p>Cantidad de agua: <strong>${transaction.amount} m<sup>3</sup></strong></p>
                                         <p>Precio total: <strong>${transaction.price} €</strong></p>
                                         <p>Fecha del pedido: <strong><fmt:formatDate type="date" value="${transaction.dateOrder}" /></strong></p>
                                         <p>Estado del pedido: <strong>${transaction.stateOrder}</strong></p>
-                                        <a href="ServletAcceptTransaction?norder=${transaction.norder}&landId=${transaction.landId}&amountWater=${transaction.amount}"><button  class="line-btn green">Aceptar</button></a>
-                                        <a href="ServletDeniedTransaction"><button  class="line-btn green">Denegar</button></a>
+                                        <c:if test="${transaction.stateOrder eq 'pendiente'}">
+                                            <a href="ServletAcceptTransaction?norder=${transaction.norder}&landId=${transaction.landId.landId}&amountWater=${transaction.amount}"><button  class="line-btn green">Aceptar</button></a>
+                                            <a href="ServletDeniedTransaction?norder=${transaction.norder}"><button  class="line-btn green">Denegar</button></a>
+                                        </c:if>
                                     </div><!--end .accordion-section-content-->
                                 </div><!--end .accordion-section--> 
                                 <c:set var="i" value="${i+1}"></c:set>

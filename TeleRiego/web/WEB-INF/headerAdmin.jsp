@@ -17,8 +17,8 @@
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav" data-0="margin-top:20px;" data-300="margin-top:5px;">
-                            <li><a href="ServletProfile">${membership.userName}</a></li>
-                            <li><a href="ServletTransaction">Transacciones</a></li>
+                            <li><a href="ServletAdminProfile">${membership.userName}</a></li>
+                            <li><a href="ServletAdminTransaction">Transacciones</a></li>
                             <li><a href="ServletLogOut">Cerrar Sesión</a></li>
                         </ul>
                     </div><!--/.navbar-collapse -->
