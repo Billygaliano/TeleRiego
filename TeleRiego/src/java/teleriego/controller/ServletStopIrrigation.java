@@ -7,11 +7,8 @@ package teleriego.controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.json.JsonArray;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,13 +24,12 @@ import teleriego.viewbean.MembershipFacade;
  *
  * @author inftel12
  */
-@WebServlet(name = "ServletLand", urlPatterns = {"/ServletLand"})
-public class ServletLand extends HttpServlet {
+@WebServlet(name = "ServletStopIrrigation", urlPatterns = {"/ServletStopIrrigation"})
+public class ServletStopIrrigation extends HttpServlet {
     @EJB
     private MembershipFacade membershipFacade;
     @EJB
     private LandFacade landFacade;
-
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -52,9 +48,11 @@ public class ServletLand extends HttpServlet {
             return;
         }
         
-        int lnadIdInteger = Integer.parseInt(request.getParameter("landid"));
+        int lnadIdInteger = Integer.parseInt(request.getParameter("landId"));
         BigDecimal landId = new BigDecimal(lnadIdInteger);
         Land specificLand = landFacade.getLand(landId);
+        
+        landFacade.updateStateLand(landId, "parado");
         
         WeatherClient weatherClient = new WeatherClient();
         JsonArray wsResult = weatherClient.findAll_JSON(JsonArray.class);
@@ -62,7 +60,7 @@ public class ServletLand extends HttpServlet {
         Boolean needIrrigate = landFacade.suggestIrrigation(specificLand.getHumidity(), specificLand.getLastDateIrrigation(), specificLand.getWMAvailable(), wsResult);
         
         BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
-        Membership membership = membershipFacade.getMembership(memberNumber);
+        Membership membership = membershipFacade.getMembership(memberNumber);        
         request.setAttribute("membership", membership);
         request.setAttribute("specificLand", specificLand);
         request.setAttribute("weatherPrediction", wsResult);
@@ -70,8 +68,7 @@ public class ServletLand extends HttpServlet {
         request.setAttribute("land", true);
         request.setAttribute("stateIrrigation", "parado");
         
-        request.getRequestDispatcher("WEB-INF/Pages/Land.jsp").forward(request, response);
-        
+        request.getRequestDispatcher("WEB-INF/Pages/Land.jsp").forward(request, response);      
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

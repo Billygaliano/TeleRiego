@@ -52,21 +52,23 @@
                     <p id="humedad">Humedad de la tierra: <strong>${specificLand.humidity}%</strong></p>
                     <p id="fechariego">Fecha del último riego: <strong><fmt:formatDate type="date" value="${specificLand.lastDateIrrigation}" /></strong></p>
                 </div>
-                <div class="land-details">
-                    <h3>Agua disponible para regar</h3>
-                    <p id="humedad">Agua disponible para regar: <strong>${specificLand.WMAvailable}m<sup>3</sup></strong></p>
-                    <form action="ServletBuyWater?landId=${specificLand.landId}" method="post" role="form">
-                        <button type="submit" class="line-btn green">Comprar agua</button>
-                    </form>
-                </div>
+                <c:if test="${stateIrrigation eq 'parado'}">
+                    <div class="land-details">
+                        <h3>Agua disponible para regar</h3>
+                        <p id="humedad">Agua disponible para regar: <strong>${specificLand.WMAvailable}m<sup>3</sup></strong></p>
+                        <form action="ServletBuyWater?landId=${specificLand.landId}" method="post" role="form">
+                            <button type="submit" class="line-btn green">Comprar agua</button>
+                        </form>
+                    </div>
+                </c:if>
                 <c:choose>
                     <c:when test="${specificLand.WMAvailable ne 0}">
                         <div class="land-details">
                             <c:choose>
-                                <c:when test="${specificLand.state eq 'regando'}">
+                                <c:when test="${stateIrrigation eq 'regando'}">
                                     <h3>Estado del riego</h3>
                                     <span>Regando...</span>
-                                    <form action="ServletLand" method="post" role="form">
+                                    <form action="ServletStopIrrigation?landId=${specificLand.landId}" method="post" role="form">
                                         <button type="submit" class="line-btn green">Dejar de regar</button>
                                     </form>
                                 </c:when>
@@ -75,13 +77,13 @@
                                     <c:choose>
                                         <c:when test="${needIrrigate}">
                                             <p>Le recomendamos que riegue este terreno.</p>
-                                            <form action="ServletLand" method="post" role="form">
+                                            <form action="ServletStartIrrigation?landId=${specificLand.landId}" method="post" role="form">
                                                 <button type="submit" class="line-btn green">Regar</button>
                                             </form>
                                         </c:when>
                                         <c:otherwise>
                                             <p>Este terreno no necesita regarse.</p>
-                                            <form action="ServletLand" method="post" role="form">
+                                            <form action="ServletStartIrrigation?landId=${specificLand.landId}" method="post" role="form">
                                                 <button type="submit" class="line-btn green">Regar</button>
                                             </form>
                                         </c:otherwise>
@@ -92,7 +94,7 @@
                     </c:when>
                     <c:otherwise>
                     </c:otherwise>
-                </c:choose>
+                </c:choose> 
             </div>
             <div class="row mar-bot40 col-sm-6" role="group" style="margin-top: 0px">
                 <p id="map">Información sobre la localización MAPA</p>

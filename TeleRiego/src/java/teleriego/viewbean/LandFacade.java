@@ -36,9 +36,7 @@ public class LandFacade extends AbstractFacade<Land> {
     public Land getLand(BigDecimal landId){
         Land specificLand = em.find(Land.class, landId);
         return specificLand;
-    }
-    
-    public boolean suggestIrrigation(BigInteger humidity, Date lastDateIrrigation, BigInteger wMAvailable, JsonArray weatherPredictions){     
+    }public boolean suggestIrrigation(BigInteger humidity, Date lastDateIrrigation, BigInteger wMAvailable, JsonArray weatherPredictions){     
         
         if(!thereIsWaterAvailable(wMAvailable)){
             return false;
@@ -94,7 +92,7 @@ public class LandFacade extends AbstractFacade<Land> {
         return months;
     }
     
-    private boolean thereIsWaterAvailable(BigInteger wMAvailable){
+    public boolean thereIsWaterAvailable(BigInteger wMAvailable){
         if(BigInteger.valueOf(0).compareTo(wMAvailable) < 0)
             return true;
         return false;
@@ -120,6 +118,31 @@ public class LandFacade extends AbstractFacade<Land> {
         
         land.setWMAvailable(total);
         em.persist(land);
+    }
+    
+    public void updateStateLand(BigDecimal landId, String state){
+        Land land = em.find(Land.class,landId);
+        
+        land.setState(state);
+        em.persist(land);
+    }
+    
+    public void updateWMAvailableHumidityLand(BigDecimal landId, BigInteger humidity, BigInteger wMAvailable){
+        Land land = em.find(Land.class,landId);
+        
+        land.setWMAvailable(wMAvailable);
+        land.setHumidity(humidity);
+        em.persist(land);
+        
+    }
+    
+    public boolean getStateIrrigate(BigDecimal landId){
+        Land land = em.find(Land.class,landId);
+        
+        if(land.getState().equals("regando"))
+            return true;
+        
+        return false;
     }
     
 }

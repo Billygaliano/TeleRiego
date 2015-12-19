@@ -6,34 +6,33 @@
 package teleriego.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
-import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.json.JsonArray;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import teleriego.client.WeatherClient;
+import teleriego.devicesimulator.DeviceSimulator;
 import teleriego.model.Land;
 import teleriego.model.Membership;
 import teleriego.viewbean.LandFacade;
 import teleriego.viewbean.MembershipFacade;
+import java.util.Date;
 
 /**
  *
  * @author inftel12
  */
-@WebServlet(name = "ServletLand", urlPatterns = {"/ServletLand"})
-public class ServletLand extends HttpServlet {
+@WebServlet(name = "ServletStartIrrigation", urlPatterns = {"/ServletStartIrrigation"})
+public class ServletStartIrrigation extends HttpServlet {
     @EJB
     private MembershipFacade membershipFacade;
     @EJB
     private LandFacade landFacade;
-
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -52,8 +51,22 @@ public class ServletLand extends HttpServlet {
             return;
         }
         
-        int lnadIdInteger = Integer.parseInt(request.getParameter("landid"));
+        int lnadIdInteger = Integer.parseInt(request.getParameter("landId"));
         BigDecimal landId = new BigDecimal(lnadIdInteger);
+        
+        request.setAttribute("stateIrrigation", "regando");
+        
+        if(!landFacade.getStateIrrigate(landId)){        
+            DeviceSimulator deviceSimulator = new DeviceSimulator(landId);
+            //request.setAttribute("stateIrrigation", "parado");   
+        }
+        
+        
+        
+        if(landFacade.getStateIrrigate(landId)){
+            response.addHeader("Refresh", "1");
+        }
+        
         Land specificLand = landFacade.getLand(landId);
         
         WeatherClient weatherClient = new WeatherClient();
@@ -68,9 +81,9 @@ public class ServletLand extends HttpServlet {
         request.setAttribute("weatherPrediction", wsResult);
         request.setAttribute("needIrrigate", needIrrigate);
         request.setAttribute("land", true);
-        request.setAttribute("stateIrrigation", "parado");
         
-        request.getRequestDispatcher("WEB-INF/Pages/Land.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/Pages/Land.jsp").forward(request, response);   
+        
         
     }
 
@@ -112,5 +125,6 @@ public class ServletLand extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 
 }
