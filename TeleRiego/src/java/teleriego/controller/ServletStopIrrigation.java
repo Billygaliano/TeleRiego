@@ -66,7 +66,7 @@ public class ServletStopIrrigation extends HttpServlet {
         request.setAttribute("weatherPrediction", wsResult);
         request.setAttribute("needIrrigate", needIrrigate);
         request.setAttribute("land", true);
-        request.setAttribute("stateIrrigation", "parado");
+        request.setAttribute("stateIrrigation", landFacade.getStateIrrigateString(landId));
         
         request.getRequestDispatcher("WEB-INF/Pages/Land.jsp").forward(request, response);      
     }

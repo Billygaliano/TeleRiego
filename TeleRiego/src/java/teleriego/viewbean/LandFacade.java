@@ -144,5 +144,19 @@ public class LandFacade extends AbstractFacade<Land> {
         
         return false;
     }
+
+    public String getStateIrrigateString(BigDecimal landId) {
+        return em.find(Land.class,landId).getState();
+    }
+
+    public boolean thereIsWaterAvailable(BigDecimal landId) {
+        int tot = Integer.parseInt(em.find(Land.class, landId).getSquareMeters().toString()) / 1000;
+        int wa = Integer.parseInt(em.find(Land.class, landId).getWMAvailable().toString());
+        if((wa-tot)<0){
+            return false;
+        }else{
+            return true;
+        }
+    }
     
 }

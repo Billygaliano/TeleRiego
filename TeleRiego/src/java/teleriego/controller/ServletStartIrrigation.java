@@ -54,18 +54,17 @@ public class ServletStartIrrigation extends HttpServlet {
         int lnadIdInteger = Integer.parseInt(request.getParameter("landId"));
         BigDecimal landId = new BigDecimal(lnadIdInteger);
         
-        request.setAttribute("stateIrrigation", "regando");
-        
-        if(!landFacade.getStateIrrigate(landId)){        
+
+        if(!landFacade.getStateIrrigate(landId) && landFacade.thereIsWaterAvailable(landId)){        
             DeviceSimulator deviceSimulator = new DeviceSimulator(landId);
-            //request.setAttribute("stateIrrigation", "parado");   
+              
         }
         
         
         
-        if(landFacade.getStateIrrigate(landId)){
-            response.addHeader("Refresh", "1");
-        }
+//        if(landFacade.getStateIrrigate(landId)){
+//            response.addHeader("Refresh", "1");
+//        }
         
         Land specificLand = landFacade.getLand(landId);
         
@@ -77,6 +76,7 @@ public class ServletStartIrrigation extends HttpServlet {
         BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
         Membership membership = membershipFacade.getMembership(memberNumber);
         request.setAttribute("membership", membership);
+        request.setAttribute("stateIrrigation", landFacade.getStateIrrigateString(landId));
         request.setAttribute("specificLand", specificLand);
         request.setAttribute("weatherPrediction", wsResult);
         request.setAttribute("needIrrigate", needIrrigate);
