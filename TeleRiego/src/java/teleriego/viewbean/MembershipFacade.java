@@ -121,8 +121,8 @@ public class MembershipFacade extends AbstractFacade<Membership> {
         Transaction transaction = em.find(Transaction.class, idTransaction);
         String servidorSMTP = "smtp.gmail.com";
         String puerto = "587";
-        String usuario = "aitor.p.n@gmail.com";
-        String password = "aitor4490";
+        String usuario = "teleriegoinftel@gmail.com";
+        String password = "inftelinftel";
    
         String destino = transaction.getMemberNumber().getEmail();
         String asunto ="Pedido "+transaction.getNorder()+" marcado como " + transaction.getStateOrder();
