@@ -51,9 +51,14 @@ public class ServletDeniedTransaction extends HttpServlet {
         BigDecimal nOrder = new BigDecimal(nOrderInteger);
         BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
         Membership membership = membershipFacade.getMembership(memberNumber);
-        transactionFacade.deniedAdminTransaction(nOrder);
+        //Only deny transaction if state is pendant
+        if(transactionFacade.getTransactionState(nOrder).equalsIgnoreCase("pendiente")){
+            transactionFacade.deniedAdminTransaction(nOrder);
+            membershipFacade.sendTransactionEmail(nOrder);
+        }
+        
         Collection<Transaction> transactions = transactionFacade.getTransactions();
-        membershipFacade.sendTransactionEmail(nOrder);
+        
         
         request.setAttribute("transactions", transactions);
         request.setAttribute("membership", membership);

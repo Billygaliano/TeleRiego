@@ -59,11 +59,17 @@ public class ServletAcceptTransaction extends HttpServlet {
         BigInteger amountWater = new BigDecimal(amountWaterInteger).toBigInteger();
         BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
         Membership membership = membershipFacade.getMembership(memberNumber);
-        transactionFacade.acceptAdminTransaction(nOrder);
-        landFacade.updateAdminLand(landId,amountWater);
+        //Only accept transaction if state is pendant.
+        if(transactionFacade.getTransactionState(nOrder).equalsIgnoreCase("pendiente")){
+           transactionFacade.acceptAdminTransaction(nOrder);
+           landFacade.updateAdminLand(landId,amountWater);
+           membershipFacade.sendTransactionEmail(nOrder);
+        }
+        
+        
         Collection<Transaction> transactions = transactionFacade.getTransactions();
         
-        membershipFacade.sendTransactionEmail(nOrder);
+        
         
         request.setAttribute("transactions", transactions);
         request.setAttribute("membership", membership);
