@@ -21,6 +21,7 @@ import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.Part;
+import teleriego.mail.Mail;
 import teleriego.model.Membership;
 import teleriego.model.Transaction;
 
@@ -118,44 +119,15 @@ public class MembershipFacade extends AbstractFacade<Membership> {
     }
     
     public void sendTransactionEmail(BigDecimal idTransaction){
-        Transaction transaction = em.find(Transaction.class, idTransaction);
-        String servidorSMTP = "smtp.gmail.com";
-        String puerto = "587";
-        String usuario = "teleriegoinftel@gmail.com";
-        String password = "inftelinftel";
-   
+        Transaction transaction = em.find(Transaction.class, idTransaction); 
         String destino = transaction.getMemberNumber().getEmail();
         String asunto ="Pedido "+transaction.getNorder()+" ha sido " + transaction.getStateOrder();
         String mensaje = "El pedido con ID :" + transaction.getNorder() +
                 "se ha marcado como "+ transaction.getStateOrder() + ", de su terreno "+transaction.getLandId().getNameland()
                 +" que dispone de "
                 + transaction.getLandId().getWMAvailable() + "m^3 de agua";
-          Properties props = new Properties();
- 
-          props.put("mail.debug", "true");
-          props.put("mail.smtp.auth", true);
-          props.put("mail.smtp.starttls.enable", true);
-          props.put("mail.smtp.host", servidorSMTP);
-          props.put("mail.smtp.port", puerto);
+        Mail mail = new Mail(asunto, mensaje,destino);
+        mail.sendMail();
 
-          Session session = Session.getInstance(props, null);
-
-          try {
-           MimeMessage message = new MimeMessage(session);
-           message.addRecipient(Message.RecipientType.TO, new InternetAddress(
-             destino));
-           message.setSubject(asunto);
-           message.setSentDate(new Date());
-           message.setText(mensaje);
-
-           Transport tr = session.getTransport("smtp");
-           tr.connect(servidorSMTP, usuario, password);
-           message.saveChanges();   
-           tr.sendMessage(message, message.getAllRecipients());
-           tr.close();
-
-          } catch (MessagingException e) {
-           e.printStackTrace();
-          }
     }
 }

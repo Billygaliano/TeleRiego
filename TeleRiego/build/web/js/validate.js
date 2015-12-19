@@ -8,7 +8,7 @@ jQuery(document).ready(function($) {
 		var f = $(this).find('.form-group'), 
 		ferror = false, 
 		emailExp = /^[^\s()<>@,;:\/]+@\w[\w\.-]+\.[a-z]{2,}$/i;
-
+                
 		f.children('input').each(function(){ // run all inputs
 
 			var i = $(this); // current input
@@ -82,7 +82,7 @@ jQuery(document).ready(function($) {
 			else var str = $(this).serialize();		
 				$.ajax({
 				type: "POST",
-				url: "contact/contact.php",
+				url: "ServletContact",
 				data: str,
 				success: function(msg){
 			$("#sendmessage").addClass("show");
@@ -90,7 +90,8 @@ jQuery(document).ready(function($) {
 		
 			if(msg == 'OK')
 			{
-				$("#sendmessage").addClass("show");				
+				$("#sendmessage").addClass("show");
+                                
 			}
 			else
 			{
@@ -99,7 +100,11 @@ jQuery(document).ready(function($) {
 			}
 		
 			$(this).html(result);});}});
+                        $('form.contactForm').each(function(){
+                            this.reset();
+                        });
 				return false;
+                                
 	});
         $('form.ServletLogin').submit(function(){
             
