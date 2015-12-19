@@ -63,6 +63,8 @@ public class ServletAcceptTransaction extends HttpServlet {
         landFacade.updateAdminLand(landId,amountWater);
         Collection<Transaction> transactions = transactionFacade.getTransactions();
         
+        membershipFacade.sendTransactionEmail(nOrder);
+        
         request.setAttribute("transactions", transactions);
         request.setAttribute("membership", membership);
         request.setAttribute("adminTransaction", true);

@@ -53,6 +53,7 @@ public class ServletDeniedTransaction extends HttpServlet {
         Membership membership = membershipFacade.getMembership(memberNumber);
         transactionFacade.deniedAdminTransaction(nOrder);
         Collection<Transaction> transactions = transactionFacade.getTransactions();
+        membershipFacade.sendTransactionEmail(nOrder);
         
         request.setAttribute("transactions", transactions);
         request.setAttribute("membership", membership);

@@ -7,13 +7,22 @@ package teleriego.viewbean;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.Part;
 import teleriego.model.Membership;
+import teleriego.model.Transaction;
 
 /**
  *
@@ -106,5 +115,46 @@ public class MembershipFacade extends AbstractFacade<Membership> {
         memberBD.setImage(b);
         em.persist(memberBD);
         return i;
-    }    
+    }
+    
+    public void sendTransactionEmail(BigDecimal idTransaction){
+        Transaction transaction = em.find(Transaction.class, idTransaction);
+        String servidorSMTP = "smtp.gmail.com";
+        String puerto = "587";
+        String usuario = "aitor.p.n@gmail.com";
+        String password = "aitor4490";
+   
+        String destino = transaction.getMemberNumber().getEmail();
+        String asunto ="Pedido "+transaction.getNorder()+" marcado como " + transaction.getStateOrder();
+        String mensaje = "El pedido con ID :" + transaction.getLandId().getLandId() +
+                "se ha marcado como "+ transaction.getStateOrder() + "de su terreno "+transaction.getLandId().getNameland() + " dispone de "
+                + transaction.getLandId().getWMAvailable() + "m^3 de agua";
+          Properties props = new Properties();
+ 
+          props.put("mail.debug", "true");
+          props.put("mail.smtp.auth", true);
+          props.put("mail.smtp.starttls.enable", true);
+          props.put("mail.smtp.host", servidorSMTP);
+          props.put("mail.smtp.port", puerto);
+
+          Session session = Session.getInstance(props, null);
+
+          try {
+           MimeMessage message = new MimeMessage(session);
+           message.addRecipient(Message.RecipientType.TO, new InternetAddress(
+             destino));
+           message.setSubject(asunto);
+           message.setSentDate(new Date());
+           message.setText(mensaje);
+
+           Transport tr = session.getTransport("smtp");
+           tr.connect(servidorSMTP, usuario, password);
+           message.saveChanges();   
+           tr.sendMessage(message, message.getAllRecipients());
+           tr.close();
+
+          } catch (MessagingException e) {
+           e.printStackTrace();
+          }
+    }
 }
