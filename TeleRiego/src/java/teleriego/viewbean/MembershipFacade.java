@@ -126,7 +126,7 @@ public class MembershipFacade extends AbstractFacade<Membership> {
    
         String destino = transaction.getMemberNumber().getEmail();
         String asunto ="Pedido "+transaction.getNorder()+" marcado como " + transaction.getStateOrder();
-        String mensaje = "El pedido con ID :" + transaction.getLandId().getLandId() +
+        String mensaje = "El pedido con ID :" + transaction.getNorder() +
                 "se ha marcado como "+ transaction.getStateOrder() + "de su terreno "+transaction.getLandId().getNameland() + " dispone de "
                 + transaction.getLandId().getWMAvailable() + "m^3 de agua";
           Properties props = new Properties();
