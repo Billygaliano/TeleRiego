@@ -93,10 +93,14 @@
 
                 // Create the Google Map using out element and options defined above
                 var map = new google.maps.Map(mapElement, mapOptions);
-                var marker = new google.maps.Marker({position: pos, 
+                <c:forEach var="specland" items="${membership.landCollection}">
+                    var marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(${specland.longitude}, ${specland.latitude}), 
                     map: map, 
-                    title:"${specificLand.nameland}",
+                    title:"${specland.nameland}",
                     animation:google.maps.Animation.DROP});
+                </c:forEach>
+                
             }
         </script>
     </c:if>
