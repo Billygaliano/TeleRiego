@@ -62,7 +62,7 @@
                     </div>
                 </c:if>
                 <c:choose>
-                    <c:when test="${specificLand.WMAvailable ne 0}">
+                    <c:when test="${specificLand.WMAvailable ge specificLand.squareMeters /1000}">
                         <div class="land-details">
                             <c:choose>
                                 <c:when test="${stateIrrigation eq 'regando'}">
