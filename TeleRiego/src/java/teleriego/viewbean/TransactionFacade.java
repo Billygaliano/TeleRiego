@@ -87,5 +87,11 @@ public class TransactionFacade extends AbstractFacade<Transaction> {
     public String getTransactionState(BigDecimal nOrder) {
         return em.find(Transaction.class, nOrder).getStateOrder();
     }
+
+    public Collection<Transaction> getPendantTransactions() {
+        Query query = em.createNamedQuery("Transaction.findByStateOrder",Transaction.class).setParameter("stateOrder", "pendiente");
+        Collection<Transaction> transactions = query.getResultList();
+        return transactions;
+    }
     
 }

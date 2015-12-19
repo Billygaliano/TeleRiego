@@ -12,8 +12,15 @@
             <div class="container">
                 <section id="perf" class="section appear clearfix">
                     <div class="container">  
-                        <div class="align-center"><h1>Transacciones</h1><br> </div>  
-                        
+                        <div class="align-center"><h1>Transacciones</h1><br> </div>
+                                <c:choose>
+                                    <c:when test="${param.pendant}">
+                                    <a href="ServletAdminTransaction"><input type="button" class="line-btn" value="Ver Todas"></a>
+                                    </c:when>
+                                    <c:otherwise>
+                                    <a href="ServletAdminPendantTransaction"><input type="button" class="line-btn" value="Ver Pendientes"></a>
+                                    </c:otherwise>
+                                </c:choose>
                         <div class="accordion">      
                             <c:set var="i" value="1"></c:set>
                             <c:forEach var="transaction" items="${transactions}">

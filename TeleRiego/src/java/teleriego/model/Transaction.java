@@ -40,7 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Transaction.findByPrice", query = "SELECT t FROM Transaction t WHERE t.price = :price"),
     @NamedQuery(name = "Transaction.findByMemberNumber", query = "SELECT t FROM Transaction t WHERE t.memberNumber = :memberNumber ORDER BY t.norder DESC"),
     @NamedQuery(name = "Transaction.findByDateOrder", query = "SELECT t FROM Transaction t WHERE t.dateOrder = :dateOrder"),
-    @NamedQuery(name = "Transaction.findByStateOrder", query = "SELECT t FROM Transaction t WHERE t.stateOrder = :stateOrder")})
+    @NamedQuery(name = "Transaction.findByStateOrder", query = "SELECT t FROM Transaction t WHERE t.stateOrder = :stateOrder ORDER BY t.norder DESC")})
 public class Transaction implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
