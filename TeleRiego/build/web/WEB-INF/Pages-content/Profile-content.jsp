@@ -31,7 +31,7 @@
                             </c:if>
                             
                         </div>                        
-                        <div class="row mar-bot40 col-md-offset-1 col-md-3" role="group" style="margin-top: 0px"> 
+                        <div class="row mar-bot40 col-md-offset-1 col-md-4" role="group" style="margin-top: 0px"> 
                             <p>Número de usuario: <strong>${membership.memberNumber}</strong></p>
                             <p>DNI: <strong>${membership.dni}</strong></p>
                             <p>Nombre y apellidos: <strong>${membership.userName} ${membership.surname}</strong></p>
@@ -40,7 +40,7 @@
                             <p>E-Mail: <strong>${membership.email}</strong></p>
                             <a href="ServletChangePass"><button type="button" id="changepass" class="line-btn green">Cambiar Contraseña</button></a>                         
                         </div>
-                        <div class="row mar-bot40 col-lg-offset-2 col-md-4" role="group" style="margin-top:0px">
+                        <div class="row mar-bot40 col-lg-offset-2 col-md-3" role="group" style="margin-top:0px">
                             <c:if test="${param.changepass}">
                                 <div class="cform" id="contact-form">
                                     <form action="ServletConfirmChangePass" method="post" role="form">
