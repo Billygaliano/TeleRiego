@@ -45,6 +45,11 @@ public class ServletAdminProfile extends HttpServlet {
         
         BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
         Membership membership = membershipFacade.getMembership(memberNumber);
+        //Only can access if membership is an administrator
+        if(!membership.getRole().equalsIgnoreCase("administrador")){
+            request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
+            return;
+        }
         request.setAttribute("membership", membership);
         request.setAttribute("adminTransaction", true);
         request.getRequestDispatcher("WEB-INF/Pages/ProfileAdmin.jsp").forward(request, response);

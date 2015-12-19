@@ -50,6 +50,8 @@ public class ServletAcceptTransaction extends HttpServlet {
             request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
             return;
         }
+        
+        
        
         int landIdInteger = Integer.parseInt(request.getParameter("landId"));
         BigDecimal landId = new BigDecimal(landIdInteger);
@@ -59,6 +61,11 @@ public class ServletAcceptTransaction extends HttpServlet {
         BigInteger amountWater = new BigDecimal(amountWaterInteger).toBigInteger();
         BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
         Membership membership = membershipFacade.getMembership(memberNumber);
+                //Only can access if membership is an administrator
+        if(!membership.getRole().equalsIgnoreCase("administrador")){
+            request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
+            return;
+        }
         //Only accept transaction if state is pendant.
         if(transactionFacade.getTransactionState(nOrder).equalsIgnoreCase("pendiente")){
            transactionFacade.acceptAdminTransaction(nOrder);

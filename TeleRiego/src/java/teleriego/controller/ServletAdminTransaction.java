@@ -49,6 +49,11 @@ public class ServletAdminTransaction extends HttpServlet {
         }
         BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
         Membership membership = membershipFacade.getMembership(memberNumber);
+                //Only can access if membership is an administrator
+        if(!membership.getRole().equalsIgnoreCase("administrador")){
+            request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
+            return;
+        }
         Collection<Transaction> transactions = transactionFacade.getTransactions();
         
         request.setAttribute("transactions", transactions);
