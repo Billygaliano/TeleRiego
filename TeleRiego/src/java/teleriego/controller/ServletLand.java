@@ -55,6 +55,18 @@ public class ServletLand extends HttpServlet {
         int lnadIdInteger = Integer.parseInt(request.getParameter("landid"));
         BigDecimal landId = new BigDecimal(lnadIdInteger);
         Land specificLand = landFacade.getLand(landId);
+
+        int MAvaible = specificLand.getWMAvailable().intValue();
+        int getSquareMeters = specificLand.getSquareMeters().intValue();
+                
+        int time = 2*MAvaible/(getSquareMeters/1000)+1;
+        System.out.println(time);
+        String timeString = String.valueOf(time);
+        
+        if(landFacade.getStateIrrigate(landId)){
+            
+            response.addHeader("Refresh", timeString);
+        }
         
         WeatherClient weatherClient = new WeatherClient();
         JsonArray wsResult = weatherClient.findAll_JSON(JsonArray.class);

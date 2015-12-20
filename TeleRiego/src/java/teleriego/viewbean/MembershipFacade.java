@@ -121,11 +121,22 @@ public class MembershipFacade extends AbstractFacade<Membership> {
     public void sendTransactionEmail(BigDecimal idTransaction){
         Transaction transaction = em.find(Transaction.class, idTransaction); 
         String destino = transaction.getMemberNumber().getEmail();
-        String asunto ="Pedido "+transaction.getNorder()+" ha sido " + transaction.getStateOrder();
-        String mensaje = "El pedido con ID :" + transaction.getNorder() +
-                "se ha marcado como "+ transaction.getStateOrder() + ", de su terreno "+transaction.getLandId().getNameland()
-                +" que dispone de "
-                + transaction.getLandId().getWMAvailable() + "m^3 de agua";
+        String asunto;
+        String mensaje;
+        if(transaction.getStateOrder().equals("pagado")){
+            asunto ="La transacción del pedido "+transaction.getNorder()+" ha sido aceptada";
+            mensaje = "Su pedido numero " + transaction.getNorder() +
+                " para el terreno " + transaction.getLandId().getNameland() + " ha sido aceptado. \n"
+                + " - Metros Comprados: " + transaction.getAmount() + "\n"
+                + " - Precio por metros cúbicos: 0.22 € " + "\n"
+                + " - Precio del pedido: " + transaction.getPrice() + " € \n\n"
+                + "Gracias por realizar su pedido con Tele Riego.";
+        }else{
+            asunto ="La transacción del pedido "+transaction.getNorder()+" ha sido rechazada";
+            mensaje = "Su pedido numero " + transaction.getNorder() +
+                " ha sido rechazado. Se ha cumplido el plazo de pago de esta transacción. Debe"
+                + " realizarla de nuevo si desea agua para su terreno "+transaction.getLandId().getNameland()+".";
+        }
         Mail mail = new Mail(asunto, mensaje,destino);
         mail.sendMail();
 

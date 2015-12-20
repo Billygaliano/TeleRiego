@@ -23,7 +23,9 @@
                                         <p>Estado: <strong>${land.state}</strong></p>
                                         <p>Último riego: <strong><fmt:formatDate type="date" value="${land.lastDateIrrigation}" /></strong></p>
                                         <p>Humedad: <strong>${land.humidity} %</strong></p>
-                                        <a href="ServletLand?landid=${land.landId}">Regar</a>
+                                        <a href="ServletLand?landid=${land.landId}">
+                                            <button type="submit" class="line-btn green">Acceder</button>
+                                        </a>
                                     </div><!--end .accordion-section-content-->
                                 </div><!--end .accordion-section--> 
                                 <c:set var="i" value="${i+1}"></c:set>
