@@ -16,11 +16,11 @@
             <div class="row mar-bot40 col-sm-6" role="group" style="margin-top: 0px">
                 <div class="land-details">
                     <h3>Predicción próximos días</h3>
-                    <table> 
+                    <table style="width: 100%"> 
                         <tbody> 
                             <tr>                               
                                 <c:forEach var="predictionForDay" items="${weatherPrediction}"> 
-                                    <td>  
+                                    <td style="width: 33%">  
                                         <!--http://stackoverflow.com/questions/18829354/converting-string-to-date-format-in-jsp-->
                                         <p class="nomDay">${predictionForDay.dateWeather}</p>
                                         <c:choose>

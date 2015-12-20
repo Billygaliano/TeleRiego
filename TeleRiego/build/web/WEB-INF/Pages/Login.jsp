@@ -83,7 +83,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="email">Contraseña</label>
-                                            <input type="text" class="form-control" name="password" id="password" placeholder="Contraseña" data-rule="required" data-msg="Por favor, introduzca contraseña" />
+                                            <input type="password" class="form-control" class="form-control" name="password" id="password" placeholder="Contraseña" data-rule="required" data-msg="Por favor, introduzca contraseña" />
                                             <div class="validation"></div>
                                         </div>
                                     <button type="submit" class="line-btn green">Acceder</button>
