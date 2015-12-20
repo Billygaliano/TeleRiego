@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import teleriego.model.Membership;
-import teleriego.viewbean.MembershipFacade;
+import teleriego.model.viewbean.MembershipFacade;
 
 /**
  *
@@ -41,6 +41,8 @@ public class ServletLands extends HttpServlet {
             request.getRequestDispatcher("WEB-INF/Pages/Login.jsp").forward(request, response);
             return;
         }
+        
+        
         BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
         Membership membership = membershipFacade.getMembership(memberNumber);
         request.setAttribute("membership", membership);

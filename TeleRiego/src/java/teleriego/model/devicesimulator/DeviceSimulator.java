@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package teleriego.devicesimulator;
+package teleriego.model.devicesimulator;
 
 import static java.lang.Thread.sleep;
 import java.math.BigDecimal;
@@ -18,7 +18,8 @@ import javax.naming.NamingException;
 import teleriego.controller.ServletStartIrrigation;
 import teleriego.controller.ServletStopIrrigation;
 import teleriego.model.Land;
-import teleriego.viewbean.LandFacade;
+import teleriego.model.rs.Recommendation;
+import teleriego.model.viewbean.LandFacade;
 
 /**
  *
@@ -28,6 +29,7 @@ public class DeviceSimulator implements Runnable{
     LandFacade landFacade = lookupLandFacadeBean();
     BigDecimal landId;
     Thread threadIrrigation;
+    Recommendation recommendation = new Recommendation();
 
     public DeviceSimulator(BigDecimal landId) {
         this.landId = landId;
@@ -47,7 +49,7 @@ public class DeviceSimulator implements Runnable{
         int area = specificLand.getSquareMeters().intValue();
         int spentCubicMetersPerPulse = area/1000;
         
-        while (specificLand.getState().equals("regando") && landFacade.thereIsWaterAvailable(wMAvailable)) {
+        while (specificLand.getState().equals("regando") && recommendation.thereIsWaterAvailable(wMAvailable)) {
             specificLand = landFacade.getLand(landId);
             
             System.out.println("Resta: " + (trueWMAvailable - spentCubicMetersPerPulse) + "\n");
@@ -78,7 +80,7 @@ public class DeviceSimulator implements Runnable{
     private LandFacade lookupLandFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (LandFacade) c.lookup("java:global/TeleRiego/LandFacade!teleriego.viewbean.LandFacade");
+            return (LandFacade) c.lookup("java:global/TeleRiego/LandFacade!teleriego.model.viewbean.LandFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

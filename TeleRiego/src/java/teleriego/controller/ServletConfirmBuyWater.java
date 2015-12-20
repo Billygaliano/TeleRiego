@@ -15,9 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import teleriego.model.Land;
 import teleriego.model.Membership;
-import teleriego.viewbean.LandFacade;
-import teleriego.viewbean.MembershipFacade;
-import teleriego.viewbean.TransactionFacade;
+import teleriego.model.viewbean.LandFacade;
+import teleriego.model.viewbean.MembershipFacade;
+import teleriego.model.viewbean.TransactionFacade;
 
 /**
  *

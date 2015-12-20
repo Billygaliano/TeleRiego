@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import teleriego.model.Membership;
-import teleriego.viewbean.MembershipFacade;
+import teleriego.model.viewbean.MembershipFacade;
 
 /**
  *

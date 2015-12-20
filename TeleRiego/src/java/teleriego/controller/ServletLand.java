@@ -7,21 +7,19 @@ package teleriego.controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.json.JsonArray;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import teleriego.client.WeatherClient;
+import teleriego.model.client.WeatherClient;
 import teleriego.model.Land;
 import teleriego.model.Membership;
-import teleriego.viewbean.LandFacade;
-import teleriego.viewbean.MembershipFacade;
+import teleriego.model.rs.Recommendation;
+import teleriego.model.viewbean.LandFacade;
+import teleriego.model.viewbean.MembershipFacade;
 
 /**
  *
@@ -33,6 +31,7 @@ public class ServletLand extends HttpServlet {
     private MembershipFacade membershipFacade;
     @EJB
     private LandFacade landFacade;
+    Recommendation recommendation = new Recommendation();
 
 
     /**
@@ -71,7 +70,7 @@ public class ServletLand extends HttpServlet {
         WeatherClient weatherClient = new WeatherClient();
         JsonArray wsResult = weatherClient.findAll_JSON(JsonArray.class);
         
-        Boolean needIrrigate = landFacade.suggestIrrigation(specificLand.getHumidity(), specificLand.getLastDateIrrigation(), specificLand.getWMAvailable(), wsResult);
+        Boolean needIrrigate = recommendation.suggestIrrigation(specificLand.getHumidity(), specificLand.getLastDateIrrigation(), specificLand.getWMAvailable(), wsResult);
         
         BigDecimal memberNumber = (BigDecimal) request.getSession().getAttribute("memberNumber");
         Membership membership = membershipFacade.getMembership(memberNumber);

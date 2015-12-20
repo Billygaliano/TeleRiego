@@ -1,4 +1,4 @@
-package teleriego.mail;
+package teleriego.model.mail;
 
 import java.util.Date;
 import java.util.Properties;

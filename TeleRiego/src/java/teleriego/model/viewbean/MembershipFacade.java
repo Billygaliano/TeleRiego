@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package teleriego.viewbean;
+package teleriego.model.viewbean;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -21,7 +21,7 @@ import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.Part;
-import teleriego.mail.Mail;
+import teleriego.model.mail.Mail;
 import teleriego.model.Membership;
 import teleriego.model.Transaction;
 
