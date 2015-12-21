@@ -39,8 +39,8 @@ public class ServletImage extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //BigDecimal id = (BigDecimal) request.getSession().getAttribute("memberNumber");
-        BigDecimal id = BigDecimal.valueOf(Integer.parseInt(request.getParameter("id")));
+        
+        BigDecimal id = (BigDecimal) request.getSession().getAttribute("memberNumber");
         byte[] img = membershipFacade.getMembershipImage(id);
         response.setContentType("image/png, image/jpeg, image/gif, image/jpg");
         response.setContentLength(img.length);

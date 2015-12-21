@@ -17,9 +17,10 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav" data-0="margin-top:20px;" data-300="margin-top:5px;">
                    <li id="photo">  
-                       <div><a href="ServletProfile">
-                                <img class="img-circle"alt="profile" src="ServletImage?id=${sessionScope.memberNumber}" />
-                             </a>
+                       <div>
+                            <a href="ServletProfile">
+                                <img class="img-circle"alt="profile" src="ServletImage" />
+                            </a>
                        </div>
                    </li>
                     <li><a href="ServletProfile">${membership.userName}</a></li>

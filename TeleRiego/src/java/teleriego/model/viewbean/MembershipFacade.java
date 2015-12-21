@@ -111,7 +111,6 @@ public class MembershipFacade extends AbstractFacade<Membership> {
         if(i<0){
             return i;
         }
-        System.out.println(i);
         Membership memberBD = em.find(Membership.class, membnum);
         memberBD.setImage(b);
         em.persist(memberBD);
