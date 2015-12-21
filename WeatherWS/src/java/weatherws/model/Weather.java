@@ -8,7 +8,6 @@ package weatherws.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,15 +15,13 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author inftel11
+ * @author macbookpro
  */
 @Entity
 @Table(name = "WEATHER")
@@ -39,13 +36,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Weather.findByPrediction", query = "SELECT w FROM Weather w WHERE w.prediction = :prediction"),
     @NamedQuery(name = "Weather.findByIdWeather", query = "SELECT w FROM Weather w WHERE w.idWeather = :idWeather")})
 public class Weather implements Serializable {
-
     private static final long serialVersionUID = 1L;
-    @Basic(optional = false)
-    @NotNull
+    @Size(max = 20)
     @Column(name = "DATE_WEATHER")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateWeather;
+    private String dateWeather;
     @Basic(optional = false)
     @NotNull
     @Column(name = "TMIN")
@@ -81,9 +75,8 @@ public class Weather implements Serializable {
         this.idWeather = idWeather;
     }
 
-    public Weather(BigDecimal idWeather, Date dateWeather, double tmin, double tmax, double precipitations, BigInteger probability, String prediction) {
+    public Weather(BigDecimal idWeather, double tmin, double tmax, double precipitations, BigInteger probability, String prediction) {
         this.idWeather = idWeather;
-        this.dateWeather = dateWeather;
         this.tmin = tmin;
         this.tmax = tmax;
         this.precipitations = precipitations;
@@ -91,11 +84,11 @@ public class Weather implements Serializable {
         this.prediction = prediction;
     }
 
-    public Date getDateWeather() {
+    public String getDateWeather() {
         return dateWeather;
     }
 
-    public void setDateWeather(Date dateWeather) {
+    public void setDateWeather(String dateWeather) {
         this.dateWeather = dateWeather;
     }
 
