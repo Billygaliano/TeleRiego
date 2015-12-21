@@ -9,8 +9,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 import javax.ejb.Stateless;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import teleriego.model.Land;
@@ -54,6 +52,13 @@ public class LandFacade extends AbstractFacade<Land> {
         em.persist(land);
     }
     
+    public void updateLastDateIrrigation(BigDecimal landId, Date todayDate) {
+        Land land = em.find(Land.class,landId);
+        
+        land.setLastDateIrrigation(todayDate);
+        em.persist(land);
+    }
+    
     public void updateWMAvailableHumidityLand(BigDecimal landId, BigInteger humidity, BigInteger wMAvailable){
         Land land = em.find(Land.class,landId);
         
@@ -85,5 +90,5 @@ public class LandFacade extends AbstractFacade<Land> {
             return true;
         }
     }
-    
+
 }

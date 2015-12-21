@@ -8,11 +8,15 @@ package teleriego.model.devicesimulator;
 import static java.lang.Thread.sleep;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import teleriego.controller.ServletLand;
 import teleriego.controller.ServletStartIrrigation;
 import teleriego.model.Land;
 import teleriego.model.rs.Recommendation;
@@ -37,6 +41,16 @@ public class DeviceSimulator implements Runnable{
     @Override
     public void run() {
         landFacade.updateStateLand(landId, "regando");
+        
+        Date today = new Date();
+        SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+        String todayString = formateador.format(today);
+        try {
+            Date todayDate = formateador.parse(todayString);
+            landFacade.updateLastDateIrrigation(landId, todayDate);
+        } catch (ParseException ex) {
+            Logger.getLogger(ServletLand.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         Land specificLand = landFacade.getLand(landId);
         BigInteger wMAvailable = specificLand.getWMAvailable();
