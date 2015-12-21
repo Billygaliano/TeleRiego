@@ -97,8 +97,10 @@
                     var marker = new google.maps.Marker({
                     position: new google.maps.LatLng(${specland.longitude}, ${specland.latitude}), 
                     map: map, 
-                    title:"${specland.nameland}",
-                    animation:google.maps.Animation.DROP});
+                    title:"${specland.nameland}"});
+                    google.maps.event.addDomListener(marker,'click',function(){
+                        window.location.href = 'ServletLand?landid=${specland.landId}';
+                    })
                 </c:forEach>
                 
             }
