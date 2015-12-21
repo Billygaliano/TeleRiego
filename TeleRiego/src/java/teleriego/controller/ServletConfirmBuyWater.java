@@ -57,6 +57,8 @@ public class ServletConfirmBuyWater extends HttpServlet {
         Membership membership = membershipFacade.getMembership(memberNumber);
         request.setAttribute("membership", membership);
         transactionFacade.setTransaction(landId,memberNumber,quantity);
+        double total = quantity * 0.22;
+        request.setAttribute("total", total);
         
         request.getRequestDispatcher("WEB-INF/Pages/BuyWater.jsp?confirmedBuyWater=true").forward(request, response);
    

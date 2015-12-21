@@ -45,7 +45,7 @@
                                     <button type="submit" class="line-btn green">Comprar</button>
                                 </form>
                                     <c:if test="${param.confirmedBuyWater}">
-                                        <p class="verificate">La compra ha sido realizada.</p>
+                                        <p class="verificate">La compra ha sido realizada, total: ${total}€.</p>
                                         <p class="verificateWater">Realice un ingreso en la cuenta 0000 2222 82 3456789990 en un plazo de 48 horas.</p>
                                     </c:if>
                             </div>
